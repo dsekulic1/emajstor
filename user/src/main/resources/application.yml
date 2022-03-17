@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: ## populate from secret
+    username: ## populate from secret
+    password: ## populate from secret
+server:
+  port: 8081
