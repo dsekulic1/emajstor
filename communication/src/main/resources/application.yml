@@ -8,5 +8,5 @@ spring:
     username: ## populate from secret
     password: ## populate from secret
 server:
-  port: 8083
+  port: 8084
 

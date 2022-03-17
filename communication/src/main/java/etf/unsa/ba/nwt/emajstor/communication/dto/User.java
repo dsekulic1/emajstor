@@ -1,5 +1,4 @@
-package etf.unsa.ba.nwt.emajstor.job.dto;
-
+package etf.unsa.ba.nwt.emajstor.communication.dto;
 
 import org.springframework.data.geo.Point;
 
@@ -81,3 +80,4 @@ public class User {
         this.contactInfo = contactInfo;
     }
 }
+

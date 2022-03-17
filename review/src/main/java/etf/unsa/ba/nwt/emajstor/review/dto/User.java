@@ -1,8 +1,6 @@
-package etf.unsa.ba.nwt.emajstor.job.dto;
+package etf.unsa.ba.nwt.emajstor.review.dto;
 
-
-import org.springframework.data.geo.Point;
-
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
