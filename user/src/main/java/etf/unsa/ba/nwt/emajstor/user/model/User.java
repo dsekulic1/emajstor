@@ -39,7 +39,9 @@ public class User {
 
     private String city;
 
-    private Point location;
+    private double locationLongitude;
+
+    private double locationLatitude;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -48,7 +50,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_info_id", referencedColumnName = "id", nullable = false)
     private ContactInfo contactInfo;
 
@@ -58,33 +60,55 @@ public class User {
     public User(String username,
                 String password,
                 String city,
-                Point location,
+                double locationLongitude,
+                double locationLatitude,
                 LocalDateTime dateCreated,
-                Role role
-               ) {
+                ContactInfo contactInfo) {
         this.username = username;
         this.password = password;
         this.city = city;
-        this.location = location;
+        this.locationLongitude = locationLongitude;
+        this.locationLatitude = locationLatitude;
+        this.dateCreated = dateCreated;
+        this.contactInfo = contactInfo;
+    }
+
+    public User(String username,
+                String password,
+                String city,
+                double locationLongitude,
+                double locationLatitude,
+                LocalDateTime dateCreated,
+                Role role,
+                ContactInfo contactInfo) {
+        this.username = username;
+        this.password = password;
+        this.city = city;
+        this.locationLongitude = locationLongitude;
+        this.locationLatitude = locationLatitude;
         this.dateCreated = dateCreated;
         this.role = role;
+        this.contactInfo = contactInfo;
     }
 
     public User(UUID id,
                 String username,
                 String password,
                 String city,
-                Point location,
+                double locationLongitude,
+                double locationLatitude,
                 LocalDateTime dateCreated,
-                Role role
-                ) {
+                Role role,
+                ContactInfo contactInfo) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.city = city;
-        this.location = location;
+        this.locationLongitude = locationLongitude;
+        this.locationLatitude = locationLatitude;
         this.dateCreated = dateCreated;
         this.role = role;
+        this.contactInfo = contactInfo;
     }
 
     public UUID getId() {
@@ -119,12 +143,20 @@ public class User {
         this.city = city;
     }
 
-    public Point getLocation() {
-        return location;
+    public double getLocationLongitude() {
+        return locationLongitude;
     }
 
-    public void setLocation(Point location) {
-        this.location = location;
+    public void setLocationLongitude(double locationLongitude) {
+        this.locationLongitude = locationLongitude;
+    }
+
+    public double getLocationLatitude() {
+        return locationLatitude;
+    }
+
+    public void setLocationLatitude(double locationLatitude) {
+        this.locationLatitude = locationLatitude;
     }
 
     public LocalDateTime getDateCreated() {

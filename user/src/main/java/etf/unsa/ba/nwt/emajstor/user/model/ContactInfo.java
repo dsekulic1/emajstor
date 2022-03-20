@@ -6,7 +6,6 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
@@ -39,12 +38,8 @@ public class ContactInfo {
 
     @Column(nullable = false)
     @NotBlank
-    @Size(min = 10, max = 17)
-    @Pattern(regexp="(^$|[0-9])")
+    @Size(min = 9, max = 17)
     private String number;
-
-    @OneToOne(mappedBy = "contactInfo")
-    private User user;
 
     public ContactInfo() {
     }
