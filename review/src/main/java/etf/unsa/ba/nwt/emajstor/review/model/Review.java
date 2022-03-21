@@ -22,12 +22,12 @@ public class Review {
     private UUID id;
 
     @Column(nullable = false)
-    @Size(min=0, max=5)
+   // @Size(min=0, max=5)
     private int numStars;
 
     @Column(nullable = false)
     @NotBlank
-    @Size(min = 2, max = 255, message = "Comment can't be shorter than 2 chars or longer than 255")
+    // @Size(min = 2, max = 255, message = "Comment can't be shorter than 2 chars or longer than 255")
     private String comment;
 
     @Column(name="user_id", nullable = false)
