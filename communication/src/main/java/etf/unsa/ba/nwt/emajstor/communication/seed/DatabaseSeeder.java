@@ -28,6 +28,7 @@ public class DatabaseSeeder {
         if(notificationHistoryRepository.count() == 0 && messageRepository.count() == 0) {
             Message message1 = createMessage("Tekst prve poruke", UUID.fromString("f64cb9a4-b3e8-49d2-bd73-454a75f11d71"), UUID.fromString("50bfde38-7058-4d82-9854-ecc4609ae742"));
             Message message2 = createMessage("Tekst druge poruke", UUID.fromString("50bfde38-7058-4d82-9854-ecc4609ae742"), UUID.fromString("f64cb9a4-b3e8-49d2-bd73-454a75f11d71"));
+            Message message3 = createMessage("Tekst nte poruke", UUID.fromString("50bfde38-7058-4d82-9854-ecc4609ae742"), UUID.fromString("f64cb9a4-b3e8-49d2-bd73-454a75f11d71"));
             createNotificationHistory(message1.getId(), message1, LocalDateTime.now());
             createNotificationHistory(message2.getId(), message2, LocalDateTime.now());
         }
