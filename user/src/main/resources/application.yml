@@ -9,3 +9,5 @@ spring:
     password: ## populate from secret
 server:
   port: 8081
+  error:
+    include-message: always
