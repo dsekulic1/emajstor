@@ -92,25 +92,10 @@ public class UserControllerTest {
     @Test
     public void updateUser() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .put("/api/users/3fa85f64-5717-4562-b3fc-2c963f66afa6")
+                .put("/api/users/f64cb9a4-b3e8-49d2-bd73-454a75f11d71")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" +
-                        "  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n" +
-                        "  \"username\": \"John123\",\n" +
-                        "  \"password\": \"naprednewebtehnologije\",\n" +
-                        "  \"city\": \"Zenica\",\n" +
-                        "  \"password\": \"John12!\",\n" +
-                        "   \"locationLongitude\" : 50.1, \n" +
-                        "   \"locationLatitude\" : 70.1,  \n" +
-                        "   \"dateCreated\": \"2021-03-24T11:08:46.299Z\",\n" +
-                        "    \"role\": \"ROLE_ADMIN\",\n" +
-                        "  \"contactInfo\": {\n" +
-                        "  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n" +
-                        "  \"firstName\": \"John\",\n" +
-                        "  \"lastName\": \"Doe\",\n" +
-                        "  \"email\": \"Doe@etf.unsa.ba\",\n" +
-                        "  \"number\": \"062738444\"\n" +
-                        "}\n"+"}");
+                .characterEncoding("UTF-8")
+                .content("{\"id\":\"" + "f64cb9a4-b3e8-49d2-bd73-454a75f11d71" + "\", \"username\":\"test data\"}");
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
