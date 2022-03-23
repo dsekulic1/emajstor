@@ -92,17 +92,19 @@ public class UserControllerTest {
     @Test
     public void updateUser() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .put("/api/users/f64cb9a4-b3e8-49d2-bd73-454a75f11d71")
+                .put("/api/users/dd633aee-bf0b-417e-a78e-6be04c75ab05")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
-                .content("{\"id\":\"" + "f64cb9a4-b3e8-49d2-bd73-454a75f11d71" + "\", \"username\":\"test data\"}");
+                .content("{" +
+                        "\n \"username\" : \"tarik\"  ,\n" +
+                        "\n \"city\" : \"Tarčin\"  \n," +
+                        "\n \"locationLongitude\" : 18.0921  \n," +
+                        "\n \"locationLatitude\" : 43.7937  \n," +
+                        "\n \"dateCreated\" : \"2022-03-21T21:02:25.078767\"  \n," +
+                        "\n \"role\" : \"ROLE_ADMIN\"  \n}");
 
         mockMvc.perform(request)
-                .andExpect(status().isOk())
+                .andExpect(status().isBadRequest())
                 .andReturn();
-
-
     }
-
 
 }
