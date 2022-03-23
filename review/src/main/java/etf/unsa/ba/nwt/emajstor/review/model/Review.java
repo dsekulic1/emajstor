@@ -26,7 +26,7 @@ public class Review {
     private int numStars;
 
     @Column(nullable = false)
-    @NotBlank
+    // @NotBlank
     // @Size(min = 2, max = 255, message = "Comment can't be shorter than 2 chars or longer than 255")
     private String comment;
 

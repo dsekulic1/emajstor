@@ -1,9 +1,14 @@
 package etf.unsa.ba.nwt.emajstor.review.repositories;
 
 import etf.unsa.ba.nwt.emajstor.review.model.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
-public interface ReviewRepository extends CrudRepository<Review, UUID> {
+@Repository
+public interface ReviewRepository extends JpaRepository<Review, UUID> {
+
 }
