@@ -6,6 +6,9 @@ import org.hibernate.annotations.Type;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -28,34 +31,35 @@ public class Service {
 
     private float price;
 
+    @Enumerated(EnumType.STRING)
     private PriceType priceType;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "business_id", referencedColumnName = "id", nullable = false)
     private Business business;
 
-    @OneToOne(mappedBy = "service")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gallery_id", referencedColumnName = "id")
     private Gallery gallery;
-
-    @OneToOne(mappedBy = "service")
-    private Deal deal;
 
     public Service() {
     }
 
-    public Service(UUID user, float price, PriceType priceType, Business business) {
+    public Service(UUID user, float price, PriceType priceType, Business business, Gallery gallery) {
         this.user = user;
         this.price = price;
         this.priceType = priceType;
         this.business = business;
+        this.gallery = gallery;
     }
 
-    public Service(UUID id, UUID user, float price, PriceType priceType, Business business) {
+    public Service(UUID id, UUID user, float price, PriceType priceType, Business business, Gallery gallery) {
         this.id = id;
         this.user = user;
         this.price = price;
         this.priceType = priceType;
         this.business = business;
+        this.gallery = gallery;
     }
 
     public UUID getId() {
@@ -96,5 +100,13 @@ public class Service {
 
     public void setBusiness(Business business) {
         this.business = business;
+    }
+
+    public Gallery getGallery() {
+        return gallery;
+    }
+
+    public void setGallery(Gallery gallery) {
+        this.gallery = gallery;
     }
 }

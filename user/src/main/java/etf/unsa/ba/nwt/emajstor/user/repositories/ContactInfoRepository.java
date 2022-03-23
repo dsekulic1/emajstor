@@ -1,4 +1,4 @@
-package etf.unsa.ba.nwt.emajstor.user.repository;
+package etf.unsa.ba.nwt.emajstor.user.repositories;
 
 import etf.unsa.ba.nwt.emajstor.user.model.ContactInfo;
 import org.springframework.data.jpa.repository.JpaRepository;

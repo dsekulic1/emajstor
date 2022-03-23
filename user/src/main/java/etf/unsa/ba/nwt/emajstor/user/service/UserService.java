@@ -5,8 +5,8 @@ import etf.unsa.ba.nwt.emajstor.user.exception.ConflictException;
 import etf.unsa.ba.nwt.emajstor.user.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.user.model.ContactInfo;
 import etf.unsa.ba.nwt.emajstor.user.model.User;
-import etf.unsa.ba.nwt.emajstor.user.repository.ContactInfoRepository;
-import etf.unsa.ba.nwt.emajstor.user.repository.UserRepository;
+import etf.unsa.ba.nwt.emajstor.user.repositories.ContactInfoRepository;
+import etf.unsa.ba.nwt.emajstor.user.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -55,9 +55,9 @@ public class UserService {
                 .orElseThrow(() -> new BadRequestException("User with username " + username.toString() + " does not exist."));
     }
 
-    public User updateUserByID(User user, UUID id) {
+    public User updateUserById(User user, UUID id) {
         if (userRepository.findById(id).isEmpty()) {
-            throw new NotFoundException("User with id " + id.toString() + " does not exist.");
+            throw new NotFoundException("User with id " + id + " does not exist.");
         } else {
             try {
                 ContactInfo contactInfo = contactInfoRepository.save(user.getContactInfo());

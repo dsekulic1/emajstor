@@ -21,7 +21,7 @@ public class Deal {
     @Type(type = "uuid-char")
     private UUID user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "service_id", referencedColumnName = "id", nullable = false)
     private Service service;
 

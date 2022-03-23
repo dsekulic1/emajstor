@@ -17,7 +17,31 @@ public class Gallery {
 
     private String imageUrl;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "service_id", referencedColumnName = "id", nullable = false)
-    private Service service;
+    public Gallery() {
+    }
+
+    public Gallery(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Gallery(UUID id, String imageUrl) {
+        this.id = id;
+        this.imageUrl = imageUrl;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

@@ -20,9 +20,6 @@ public class Business {
     @NotBlank
     private String name;
 
-    @OneToOne(mappedBy = "business")
-    private Service service;
-
     public Business() {
     }
 
