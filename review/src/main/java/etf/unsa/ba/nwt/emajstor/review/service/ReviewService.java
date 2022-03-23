@@ -1,6 +1,7 @@
 package etf.unsa.ba.nwt.emajstor.review.service;
 
 import etf.unsa.ba.nwt.emajstor.review.exception.BadRequestException;
+import etf.unsa.ba.nwt.emajstor.review.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.review.model.Review;
 import etf.unsa.ba.nwt.emajstor.review.repositories.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,13 @@ public class ReviewService {
             }
     }
 
+    public Review updateReviewById(Review review, UUID id) {
+        if (reviewRepository.findById(id).isEmpty()) {
+            throw new NotFoundException("Message with id " + id + " does not exist.");
+        }
+
+        return reviewRepository.save(review);
+    }
 
     private Boolean validateReview (Review review) {
         return (StringUtils.isEmpty(review.getComment()) || StringUtils.isBlank(review.getComment()));

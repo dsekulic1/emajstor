@@ -36,6 +36,9 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.deleteReviewById(id));
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Review> updateMessageById(@PathVariable UUID id, @RequestBody @Valid Review review ) {
+        return ResponseEntity.ok(reviewService.updateReviewById(review, id));
+    }
 
 }
