@@ -45,7 +45,7 @@ public class UserService {
         }
     }
 
-    public User getUserByID(UUID id) {
+    public User getUserById(UUID id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("User with id " + id.toString() + " does not exist."));
     }
@@ -70,7 +70,7 @@ public class UserService {
     }
 
     public User deleteUserById(UUID id) {
-        User user = getUserByID(id);
+        User user = getUserById(id);
 
         if(user != null) {
             userRepository.deleteById(user.getId());

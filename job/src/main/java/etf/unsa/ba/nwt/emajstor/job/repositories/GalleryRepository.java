@@ -8,4 +8,7 @@ import java.util.UUID;
 
 @Repository
 public interface GalleryRepository extends JpaRepository<Gallery, UUID> {
+
+    boolean existsById(UUID id);
+
 }
