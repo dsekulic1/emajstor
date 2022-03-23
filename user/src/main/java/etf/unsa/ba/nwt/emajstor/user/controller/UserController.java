@@ -42,7 +42,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserByUsername(@PathVariable UUID id) {
-        return ResponseEntity.ok(userService.getUserByID(id));
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PutMapping("/{id}")
