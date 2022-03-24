@@ -64,13 +64,21 @@ public class ReviewControllerTest {
                 .andReturn();
     }
 
-    public void deleteReviewByID() throws Exception {
+    @Test
+    public void updateUser() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .delete("/api/review/2a21627c-f36b-4955-bc1d-88178cd3835f")
-                .contentType(MediaType.APPLICATION_JSON);
+                .put("/api/review/25facf32-2567-4cd0-b740-b354e45f2e3f")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{" +
+                        "\n \"numStars\" : 18.0921  \n," +
+                        "\n \"comment\" : \"f64cb9a4-b3e8-49d2-bd73-454a75f11d7\"  \n," +
+                        "\n \"user\" : \"f64cb9a4-b3e8-49d2-bd73-454a75f11d71\"  \n," +
+                        "\n \"worker\" : \"50bfde38-7058-4d82-9854-ecc4609ae742\"  \n}");
+
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
     }
+
 }
