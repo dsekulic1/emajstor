@@ -37,17 +37,17 @@ public class UserControllerTest {
     @Test
     public void getUserByID() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/api/users/dd633aee-bf0b-417e-a78e-6be04c75ab05")
+                .get("/api/users/4c7c7786-b086-4a12-87c3-3b6f7e644608")
                 .accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("{\n \"id\" : \"dd633aee-bf0b-417e-a78e-6be04c75ab05\",  \n" +
-                        "\n \"username\" : \"tarik\"  ,\n" +
-                        "\n \"city\" : \"Tarčin\"  \n," +
-                        "\n \"locationLongitude\" : 18.0921  \n," +
-                        "\n \"locationLatitude\" : 43.7937  \n," +
-                        "\n \"dateCreated\" : \"2022-03-21T21:02:25.078767\"  \n," +
+                .andExpect(MockMvcResultMatchers.content().json("{\n \"id\" : \"4c7c7786-b086-4a12-87c3-3b6f7e644608\",  \n" +
+                        "\n \"username\" : \"davor\"  ,\n" +
+                        "\n \"city\" : \"Sarajevo\"  \n," +
+                        "\n \"locationLongitude\" : 18.4131  \n," +
+                        "\n \"locationLatitude\" : 43.8563  \n," +
+                        "\n \"dateCreated\" : \"2022-03-24T19:18:42.00017\"  \n," +
                         "\n \"role\" : \"ROLE_ADMIN\"  \n}"));
     }
     @Test
@@ -58,12 +58,12 @@ public class UserControllerTest {
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("{\n \"id\" : \"dd633aee-bf0b-417e-a78e-6be04c75ab05\",  \n" +
+                .andExpect(MockMvcResultMatchers.content().json("{" +
                         "\n \"username\" : \"tarik\"  ,\n" +
                         "\n \"city\" : \"Tarčin\"  \n," +
                         "\n \"locationLongitude\" : 18.0921  \n," +
                         "\n \"locationLatitude\" : 43.7937  \n," +
-                        "\n \"dateCreated\" : \"2022-03-21T21:02:25.078767\"  \n," +
+                        "\n \"dateCreated\" : \"2022-03-24T19:18:42.00417\"  \n," +
                         "\n \"role\" : \"ROLE_ADMIN\"  \n}"));
     }
 
