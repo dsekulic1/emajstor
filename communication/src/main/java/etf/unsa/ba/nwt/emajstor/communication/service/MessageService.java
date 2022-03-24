@@ -86,6 +86,7 @@ public class MessageService {
         Message message = getMessageById(id);
 
         messageRepository.deleteById(id);
+        notificationHistoryRepository.deleteByMessage(message);
 
         return message;
     }

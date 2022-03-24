@@ -25,7 +25,7 @@ public class GalleryController {
     private final GalleryService galleryService;
 
     @PostMapping
-    public ResponseEntity<Gallery> addBusiness(@RequestBody @Valid Gallery gallery) {
+    public ResponseEntity<Gallery> addGallery(@RequestBody @Valid Gallery gallery) {
         return ResponseEntity.ok(galleryService.addGallery(gallery));
     }
 
@@ -42,6 +42,11 @@ public class GalleryController {
     @PutMapping("/{id}")
     public ResponseEntity<Gallery> updateGalleryById(@PathVariable UUID id, @RequestBody @Valid Gallery gallery) {
         return ResponseEntity.ok(galleryService.updateGalleryById(gallery, id));
+    }
+
+    @PutMapping
+    public ResponseEntity<Gallery> updateGallery(@RequestBody @Valid Gallery gallery) {
+        return ResponseEntity.ok(galleryService.updateGalleryById(gallery, gallery.getId()));
     }
 
     @DeleteMapping("/{id}")

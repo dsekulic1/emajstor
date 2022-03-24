@@ -3,12 +3,14 @@ package etf.unsa.ba.nwt.emajstor.job.service;
 import etf.unsa.ba.nwt.emajstor.job.exception.BadRequestException;
 import etf.unsa.ba.nwt.emajstor.job.model.Gallery;
 import etf.unsa.ba.nwt.emajstor.job.repositories.GalleryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class GalleryService {
 
     private GalleryRepository galleryRepository;
@@ -26,7 +28,7 @@ public class GalleryService {
                 .orElseThrow(() -> new BadRequestException("User with id " + id.toString() + " does not exist."));
     }
 
-    public Gallery updateGalleryById(Gallery gallery,UUID id) {
+    public Gallery updateGalleryById(Gallery gallery, UUID id) {
         if (!galleryRepository.existsById(id)) {
             throw new BadRequestException("User with id " + id.toString() + " does not exist.");
         }

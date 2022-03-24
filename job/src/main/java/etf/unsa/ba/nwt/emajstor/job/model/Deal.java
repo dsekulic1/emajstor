@@ -22,8 +22,8 @@ public class Deal {
     private UUID user;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "service_id", referencedColumnName = "id", nullable = false)
-    private Service service;
+    @JoinColumn(name = "job_id", referencedColumnName = "id", nullable = false)
+    private Job job;
 
     @CreationTimestamp
     @Column(nullable = false)
@@ -34,17 +34,17 @@ public class Deal {
     public Deal() {
     }
 
-    public Deal(UUID user, Service service, LocalDateTime dateCreated, Boolean finished) {
+    public Deal(UUID user, Job job, LocalDateTime dateCreated, Boolean finished) {
         this.user = user;
-        this.service = service;
+        this.job = job;
         this.dateCreated = dateCreated;
         this.finished = finished;
     }
 
-    public Deal(UUID id, UUID user, Service service, LocalDateTime dateCreated, Boolean finished) {
+    public Deal(UUID id, UUID user, Job job, LocalDateTime dateCreated, Boolean finished) {
         this.id = id;
         this.user = user;
-        this.service = service;
+        this.job = job;
         this.dateCreated = dateCreated;
         this.finished = finished;
     }
@@ -65,13 +65,9 @@ public class Deal {
         this.user = user;
     }
 
-    public Service getService() {
-        return service;
-    }
+    public Job getJob() { return job; }
 
-    public void setService(Service service) {
-        this.service = service;
-    }
+    public void setJob(Job job) { this.job = job; }
 
     public LocalDateTime getDateCreated() {
         return dateCreated;

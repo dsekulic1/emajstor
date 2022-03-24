@@ -17,8 +17,8 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name="service")
-public class Service {
+@Table(name="job")
+public class Job {
     @Id
     @Type(type = "uuid-char")
     @GeneratedValue(generator = "UUID")
@@ -29,23 +29,23 @@ public class Service {
     @Type(type = "uuid-char")
     private UUID user;
 
-    private float price;
+    private double price;
 
     @Enumerated(EnumType.STRING)
     private PriceType priceType;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "business_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "business_id", referencedColumnName = "id")
     private Business business;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gallery_id", referencedColumnName = "id")
     private Gallery gallery;
 
-    public Service() {
+    public Job() {
     }
 
-    public Service(UUID user, float price, PriceType priceType, Business business, Gallery gallery) {
+    public Job(UUID user, double price, PriceType priceType, Business business, Gallery gallery) {
         this.user = user;
         this.price = price;
         this.priceType = priceType;
@@ -53,7 +53,7 @@ public class Service {
         this.gallery = gallery;
     }
 
-    public Service(UUID id, UUID user, float price, PriceType priceType, Business business, Gallery gallery) {
+    public Job(UUID id, UUID user, double price, PriceType priceType, Business business, Gallery gallery) {
         this.id = id;
         this.user = user;
         this.price = price;
@@ -78,11 +78,11 @@ public class Service {
         this.user = user;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

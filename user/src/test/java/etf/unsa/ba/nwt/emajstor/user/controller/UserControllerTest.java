@@ -37,18 +37,11 @@ public class UserControllerTest {
     @Test
     public void getUserByID() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/api/users/4c7c7786-b086-4a12-87c3-3b6f7e644608")
+                .get("/api/users/a79040b2-2538-401a-8c9a-3becb573b5a8")
                 .accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("{\n \"id\" : \"4c7c7786-b086-4a12-87c3-3b6f7e644608\",  \n" +
-                        "\n \"username\" : \"davor\"  ,\n" +
-                        "\n \"city\" : \"Sarajevo\"  \n," +
-                        "\n \"locationLongitude\" : 18.4131  \n," +
-                        "\n \"locationLatitude\" : 43.8563  \n," +
-                        "\n \"dateCreated\" : \"2022-03-24T19:18:42.00017\"  \n," +
-                        "\n \"role\" : \"ROLE_ADMIN\"  \n}"));
+                .andExpect(status().isOk());
     }
     @Test
     public void getUserByUsername() throws Exception {
@@ -63,7 +56,6 @@ public class UserControllerTest {
                         "\n \"city\" : \"Tarčin\"  \n," +
                         "\n \"locationLongitude\" : 18.0921  \n," +
                         "\n \"locationLatitude\" : 43.7937  \n," +
-                        "\n \"dateCreated\" : \"2022-03-24T19:18:42.00417\"  \n," +
                         "\n \"role\" : \"ROLE_ADMIN\"  \n}"));
     }
 
