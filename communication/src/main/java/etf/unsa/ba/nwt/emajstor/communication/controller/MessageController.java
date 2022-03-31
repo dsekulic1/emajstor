@@ -88,4 +88,11 @@ public class MessageController {
         }
     }
 
+    @GetMapping(path = "/text/{textMessage}")
+    public ResponseEntity<List<Message>> findAllMessageByText(@PathVariable String textMessage) {
+        return ResponseEntity.ok(messageService.findAllMessageByText(textMessage));
+    }
+
+
+
 }

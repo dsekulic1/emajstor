@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -93,5 +94,26 @@ public class MessageService {
 
     private Boolean validateMessage (Message message) {
         return (StringUtils.isEmpty(message.getText()) || StringUtils.isBlank(message.getText()));
+    }
+
+
+    public List<Message> findAllMessageByText(String textMessage) {
+        if (textMessage == null) {
+            throw new BadRequestException("Please insert text of message.");
+        }
+
+        List<Message> messageList = messageRepository.findAll();
+        List<Message> returnMessages = new ArrayList<>();
+
+        for (Message message : messageList){
+            if(message.getText().contains(textMessage))
+                returnMessages.add(message);
+        }
+
+        if (returnMessages.isEmpty()) {
+            throw new NotFoundException("Message with this text does not found.");
+        }
+
+        return returnMessages;
     }
 }
