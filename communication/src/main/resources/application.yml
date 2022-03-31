@@ -4,9 +4,9 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: ## populate from secret
-    username: ## populate from secret
-    password: ## populate from secret
+    url: jdbc:postgresql://localhost:5432/novaBaza
+    username: postgres
+    password: baza123
 server:
   port: 8084
   error:

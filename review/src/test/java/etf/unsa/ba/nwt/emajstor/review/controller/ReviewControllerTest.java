@@ -36,6 +36,8 @@ public class ReviewControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private static  Review review;
+
     @Autowired
     private ReviewRepository reviewRepository;
 
@@ -52,8 +54,7 @@ public class ReviewControllerTest {
 
     @BeforeAll
     private void generateDatabase(){
-        reviewRepository.deleteAll();
-        createReview(2,"jako površan majstor, nije temeljit", UUID.fromString("a1788536-d2b8-4bc5-9609-45d33202058b"), UUID.fromString("8e1eb86e-66e9-4a5d-a75b-470ab4cb70c8"));
+        review = createReview(2,"jako povrsan majstor, nije temeljit", UUID.fromString("a1788536-d2b8-4bc5-9609-45d33202058b"), UUID.fromString("8e1eb86e-66e9-4a5d-a75b-470ab4cb70c8"));
     }
 
 
@@ -127,27 +128,16 @@ public class ReviewControllerTest {
     @Test
     public void getReviewByIDOkRequest() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/api/review")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{" +
-                        "\n \"numStars\" : 4  \n," +
-                        "\n \"comment\" : \"super majstor\"  \n," +
-                        "\n \"user\" : \"f64cb9a4-b3e8-49d2-bd73-454a75f11d71\"  \n," +
-                        "\n \"worker\" : \"50bfde38-7058-4d82-9854-ecc4609ae742\"  \n}");
+                .get("/api/review/"+review.getId())
+                .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
 
-        String id = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+        String id = JsonPath.read(result.getResponse().getContentAsString(), "$.comment");
 
-         request = MockMvcRequestBuilders
-                .get("/api/review/"+id)
-                .accept(MediaType.APPLICATION_JSON);
-
-        mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andReturn();
+        assertEquals(id,review.getComment());
 
     }
 
