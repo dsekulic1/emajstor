@@ -69,9 +69,9 @@ public class UserController {
     }
 
     private User applyPatchToUser(
-            JsonPatch patch, User targetReview) throws JsonPatchException, JsonProcessingException {
+            JsonPatch patch, User targetUser) throws JsonPatchException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode patched = patch.apply(objectMapper.convertValue(targetReview, JsonNode.class));
+        JsonNode patched = patch.apply(objectMapper.convertValue(targetUser, JsonNode.class));
         return objectMapper.treeToValue(patched, User.class);
     }
 
