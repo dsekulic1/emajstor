@@ -3,6 +3,7 @@
 *.iws
 *.iml
 *.ipr
+.jpb
 
 # System files
 .DS_Store
