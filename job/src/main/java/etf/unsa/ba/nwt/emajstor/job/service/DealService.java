@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class DealService {
 
-    private DealRepository dealRepository;
+    private final DealRepository dealRepository;
 
     public List<Deal> getAllDeals() {
         return dealRepository.findAll();

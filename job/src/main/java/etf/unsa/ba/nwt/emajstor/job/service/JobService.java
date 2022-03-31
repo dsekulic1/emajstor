@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JobService {
 
-    private JobRepository jobRepository;
+    private final JobRepository jobRepository;
 
     public List<Job> getAllJobs() {
         return jobRepository.findAll();

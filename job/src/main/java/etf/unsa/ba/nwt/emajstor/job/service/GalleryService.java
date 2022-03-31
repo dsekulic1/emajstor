@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class GalleryService {
 
-    private GalleryRepository galleryRepository;
+    private final GalleryRepository galleryRepository;
 
     public List<Gallery> getAllGallery() {
         return galleryRepository.findAll();
