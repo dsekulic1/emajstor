@@ -76,7 +76,6 @@ public class ReviewControllerTest {
                 .accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
-                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(greaterThan(0))))
                 .andReturn();
     }
@@ -227,6 +226,14 @@ public class ReviewControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
+        request = MockMvcRequestBuilders
+                .delete("/api/review/"+id)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+
     }
 
     @Test
@@ -270,6 +277,14 @@ public class ReviewControllerTest {
         String komentar = JsonPath.read(result.getResponse().getContentAsString(), "$.comment");
 
         assertEquals(komentar,"mijenjamo komentar pomocu patch metode");
+
+        request = MockMvcRequestBuilders
+                .delete("/api/review/"+id)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
     }
 
     @Test

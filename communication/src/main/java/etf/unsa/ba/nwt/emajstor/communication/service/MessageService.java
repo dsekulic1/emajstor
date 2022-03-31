@@ -111,7 +111,7 @@ public class MessageService {
         }
 
         if (returnMessages.isEmpty()) {
-            throw new NotFoundException("Message with this text does not found.");
+            throw new NotFoundException("Message with this text is not found.");
         }
 
         return returnMessages;
