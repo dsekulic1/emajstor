@@ -1,4 +1,11 @@
 spring:
+  main:
+    allow-circular-references: true
+    mvc:
+      pathmatch:
+        matching-strategy: ant_path_matcher
+    application:
+      admin: job-service
   jpa:
     hibernate:
       ddl-auto: update

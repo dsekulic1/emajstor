@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>New message</title>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+
+    * {
+      color: #121212;
+      font-family: Poppins, sans-serif;
+      font-style: normal;
+    }
+
+    .container {
+      width: 590px;
+      min-height: 750px;
+      height: fit-content;
+    }
+
+    .box {
+      width: 100%;
+      background-color: white;
+    }
+
+    .text {
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    .smaller-text {
+      font-size: 18px !important;
+    }
+
+    .footer-text {
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    .header {
+      font-weight: 600;
+      font-size: 28px;
+    }
+
+    .vertical-spacer {
+      margin-bottom: 36px;
+    }
+
+    .left-spacer {
+      margin-left: 36px;
+    }
+
+    .footer {
+      width: 100%;
+      background-color: white;
+      margin-top: 10px;
+      height: 0;
+      border-top: 1px solid rgba(102, 102, 102, 0.16);
+    }
+
+    a:visited {
+      text-decoration: none;
+      color: #0084F4
+    }
+
+    a:link {
+      text-decoration: none;
+      color: #0084F4
+    }
+
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <div class="icon left-spacer">
+    <img src="icons/worker.svg" alt="logo" width="70" height="70"/>
+  </div>
+  <div class="box left-spacer">
+    <div class="header vertical-spacer">Dear <span th:text="${name}"></span>,</div>
+    <div class="text">You have new unread messages from <span th:text="${sender}"></span></div>
+    <div class="text vertical-spacer">Please check your account!</div>
+    <p class="vertical-spacer text smaller-text">eMajstor Team</p>
+  </div>
+  <div class="footer left-spacer">
+    <p class="footer-text">eMajstor - find your craftsman</p>
+  </div>
+</div>
+</body>
+</html>

@@ -21,7 +21,7 @@ import java.util.UUID;
 public class MessageService {
     private final MessageRepository messageRepository;
     private final NotificationHistoryRepository notificationHistoryRepository;
-
+    private final EmailService emailService;
     public List<Message> getAllMessages() { return  messageRepository.findAll(); }
 
     public Message addMessage(Message message) {
