@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -32,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles("test")
 public class ReviewControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -55,6 +57,8 @@ public class ReviewControllerTest {
     @BeforeAll
     private void generateDatabase(){
         review = createReview(2,"jako povrsan majstor, nije temeljit", UUID.fromString("a1788536-d2b8-4bc5-9609-45d33202058b"), UUID.fromString("8e1eb86e-66e9-4a5d-a75b-470ab4cb70c8"));
+        review = createReview(5,"test komentar", UUID.fromString("a1788536-d2b8-4bc5-9609-45d33202058b"), UUID.fromString("8e1eb86e-66e9-4a5d-a75b-470ab4cb70c8"));
+
     }
 
 
