@@ -1,1 +1,21 @@
-
+server:
+  tomcat:
+    threads:
+      max: 100
+  port: 8888
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/dsekulic1/config-repo.git
+          username: ## populate from secret
+          password: ## populate from secret
+          skip-ssl-validation: true
+          ignore-local-ssh-settings: true
+          clone-on-start: true
+          default-label: main
+  security:
+    user:
+      name: root
+      password: root
