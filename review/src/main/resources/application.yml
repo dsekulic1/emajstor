@@ -1,20 +1,7 @@
 spring:
-  main:
-    allow-circular-references: true
-    mvc:
-      pathmatch:
-        matching-strategy: ant_path_matcher
-    application:
-      admin: review-service
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  datasource:
-    url: ## populate from secret
-    username: ## populate from secret
-    password: ## populate from secret
-server:
-  port: 8083
-  error:
-    include-message: always
+  application:
+    name: review
+  profiles:
+    active: development
+  config:
+    import: optional:configserver:http://root:root@localhost:8888
