@@ -138,9 +138,9 @@ public class ReviewControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        String id = JsonPath.read(result.getResponse().getContentAsString(), "$.comment");
+        String comment = JsonPath.read(result.getResponse().getContentAsString(), "$.comment");
 
-        assertEquals(id,review.getComment());
+        assertEquals(comment,review.getComment());
 
     }
 

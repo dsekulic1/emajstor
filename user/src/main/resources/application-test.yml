@@ -1,0 +1,20 @@
+spring:
+  main:
+    allow-circular-references: true
+    mvc:
+      pathmatch:
+        matching-strategy: ant_path_matcher
+    application:
+      admin: review-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test_db
+    username: postgres
+    password:
+server:
+  port: 8083
+  error:
+    include-message: always
