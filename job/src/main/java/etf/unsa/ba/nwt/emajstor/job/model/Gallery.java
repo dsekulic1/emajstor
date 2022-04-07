@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 @Entity
@@ -15,6 +16,8 @@ public class Gallery {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
+    @Column(nullable = false)
+    @NotBlank
     private String imageUrl;
 
     public Gallery() {
