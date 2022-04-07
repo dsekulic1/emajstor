@@ -24,7 +24,7 @@ public class DealService {
         return dealRepository.findAll();
     }
 
-    public Deal addDeal(Deal deal) throws ServiceUnavailableException {
+    public Deal addDeal(Deal deal) {
 
         try {
             if (getUser(deal.getUser()) != null || getUser(deal.getJob().getUser()) != null) {
@@ -33,7 +33,7 @@ public class DealService {
                 throw new BadRequestException("User or worker does not exist.");
             }
         } catch (Exception exception) {
-            throw exception;
+            throw new BadRequestException("User does not exist.");
         }
     }
 
@@ -42,7 +42,7 @@ public class DealService {
                 .orElseThrow(() -> new BadRequestException("Deal with id " + id.toString() + " does not exist."));
     }
 
-    public Deal updateDealById(Deal deal, UUID id) throws ServiceUnavailableException {
+    public Deal updateDealById(Deal deal, UUID id) {
         if (!dealRepository.existsById(id)) {
             throw new BadRequestException("Deal with id " + id.toString() + " does not exist.");
         }
@@ -54,7 +54,7 @@ public class DealService {
                 throw new BadRequestException("User or worker does not exist.");
             }
         } catch (Exception exception) {
-            throw exception;
+            throw new BadRequestException("User does not exist.");
         }
     }
 

@@ -97,7 +97,7 @@ public class MessageService {
         return messageList;
     }
 
-    public Message updateMessageById(Message message, UUID id) throws ServiceUnavailableException {
+    public Message updateMessageById(Message message, UUID id) {
         if (messageRepository.findById(id).isEmpty()) {
             throw new NotFoundException("Message with id " + id + " does not exist.");
         }
@@ -109,7 +109,7 @@ public class MessageService {
                 throw new BadRequestException("User or worker does not exist.");
             }
         } catch (Exception exception) {
-            throw exception;
+            throw new BadRequestException("User or worker does not exist.");
         }
 
     }

@@ -54,14 +54,13 @@ public class ReviewService {
             }
 
             try {
-                if (getUser(review.getUser()) != null || getUser(review.getWorker()) != null) {
-                    Review newReview= reviewRepository.save(review);
-                    return newReview;
-                } else {
-                    throw new BadRequestException("User or worker does not exist.");
-                }
+                User user = getUser(review.getUser());
+                User worker = getUser(review.getWorker());
+
+                return reviewRepository.save(review);
+
             } catch (Exception exception) {
-                throw exception;
+                throw new BadRequestException("User does not exist.");
             }
     }
 

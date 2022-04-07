@@ -1,7 +1,7 @@
 package etf.unsa.ba.nwt.emajstor.review.controller;
 
-
 import com.jayway.jsonpath.JsonPath;
+
 import etf.unsa.ba.nwt.emajstor.review.model.Review;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -19,13 +19,13 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import etf.unsa.ba.nwt.emajstor.review.repositories.ReviewRepository;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.json.JSONArray;
 
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -38,10 +38,11 @@ public class ReviewControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private static  Review review;
+    private static Review review;
 
     @Autowired
     private ReviewRepository reviewRepository;
+
 
     private Review createReview(int numStars, String comment, UUID user, UUID worker) {
         Review review = new Review();
@@ -60,7 +61,6 @@ public class ReviewControllerTest {
         review = createReview(5,"test komentar", UUID.fromString("a1788536-d2b8-4bc5-9609-45d33202058b"), UUID.fromString("8e1eb86e-66e9-4a5d-a75b-470ab4cb70c8"));
 
     }
-
 
     @Test
     public void getAllReviewsOkRequest() throws Exception {

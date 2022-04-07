@@ -1,11 +1,9 @@
 spring:
   main:
     allow-circular-references: true
-    mvc:
-      pathmatch:
-        matching-strategy: ant_path_matcher
-    application:
-      admin: review-service
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,6 +13,12 @@ spring:
     username: postgres
     password:
 server:
-  port: 8083
+  port: 8081
   error:
     include-message: always
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true

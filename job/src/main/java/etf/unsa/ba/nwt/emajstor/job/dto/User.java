@@ -1,8 +1,6 @@
 package etf.unsa.ba.nwt.emajstor.job.dto;
 
 
-import org.springframework.data.geo.Point;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,19 +9,21 @@ public class User {
     private String username;
     private String password;
     private String city;
-    private Point location;
+    private double locationLongitude;
+    private double locationLatitude;
     private LocalDateTime dateCreated;
     private ContactInfo contactInfo;
 
     public User() {
     }
 
-    public User(UUID id, String username, String password, String city, Point location, LocalDateTime dateCreated, ContactInfo contactInfo) {
+    public User(UUID id, String username, String password, String city, double locationLongitude, double locationLatitude, LocalDateTime dateCreated, ContactInfo contactInfo) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.city = city;
-        this.location = location;
+        this.locationLongitude = locationLongitude;
+        this.locationLatitude = locationLatitude;
         this.dateCreated = dateCreated;
         this.contactInfo = contactInfo;
     }
@@ -60,12 +60,16 @@ public class User {
         this.city = city;
     }
 
-    public Point getLocation() {
-        return location;
+    public double getLocationLongitude() {
+        return locationLongitude;
     }
 
-    public void setLocation(Point location) {
-        this.location = location;
+    public double getLocationLatitude() {
+        return locationLatitude;
+    }
+
+    public void setLocationLatitude(double locationLatitude) {
+        this.locationLatitude = locationLatitude;
     }
 
     public LocalDateTime getDateCreated() {
@@ -82,5 +86,8 @@ public class User {
 
     public void setContactInfo(ContactInfo contactInfo) {
         this.contactInfo = contactInfo;
+    }
+
+    public void setLocationLongitude(double locationLongitude) {
     }
 }
