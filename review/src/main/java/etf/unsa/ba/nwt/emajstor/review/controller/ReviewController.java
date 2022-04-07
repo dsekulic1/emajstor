@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.naming.ServiceUnavailableException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +25,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<Review> addReview(@RequestBody @Valid Review review) {
+    public ResponseEntity<Review> addReview(@RequestBody @Valid Review review) throws ServiceUnavailableException {
         return ResponseEntity.ok(reviewService.addReview(review));
     }
 

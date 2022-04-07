@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/email")
@@ -22,7 +23,7 @@ public class EmailController  {
         emailSenderService.sendHtmlMessage(email);
     }
 
-    @PostMapping("email/send")
+    @PostMapping("/send/simple")
     public void sendSimpleMessage(@RequestBody Email email) {
         emailSenderService.sendSimpleMessage(email);
     }

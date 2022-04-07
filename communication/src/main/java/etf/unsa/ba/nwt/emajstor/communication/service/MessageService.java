@@ -1,5 +1,6 @@
 package etf.unsa.ba.nwt.emajstor.communication.service;
 
+import etf.unsa.ba.nwt.emajstor.communication.dto.User;
 import etf.unsa.ba.nwt.emajstor.communication.exception.BadRequestException;
 import etf.unsa.ba.nwt.emajstor.communication.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.communication.model.Message;
@@ -9,8 +10,12 @@ import etf.unsa.ba.nwt.emajstor.communication.repositories.NotificationHistoryRe
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
 
 
+import javax.mail.MessagingException;
+import javax.naming.ServiceUnavailableException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +27,11 @@ public class MessageService {
     private final MessageRepository messageRepository;
     private final NotificationHistoryRepository notificationHistoryRepository;
     private final EmailService emailService;
+    private final RestTemplate restTemplate;
+
     public List<Message> getAllMessages() { return  messageRepository.findAll(); }
 
-    public Message addMessage(Message message) {
+    public Message addMessage(Message message) throws ServiceUnavailableException, MessagingException {
         if (validateMessage(message)) {
             throw new BadRequestException("Message must contains text.");
         }
@@ -35,10 +42,25 @@ public class MessageService {
            notificationHistory.setMessage(newMessage);
            notificationHistory.setUser(newMessage.getReceiver());
            notificationHistory.setTimeStamp(LocalDateTime.now());
+           User sender = getUser(message.getSender());
+           User receiver = getUser(message.getReceiver());
+           emailService.sendNotification(sender, receiver);
            notificationHistoryRepository.save(notificationHistory);
            return newMessage;
         } catch (Exception exception) {
             throw exception;
+        }
+    }
+
+    public User getUser(final UUID id) throws ServiceUnavailableException {
+        try {
+            return restTemplate.getForObject(
+                    "http://user/api/users/{id}",
+                    User.class,
+                    id
+            );
+        } catch (ResourceAccessException ex) {
+            throw new ServiceUnavailableException("Error while communicating with another microservice.");
         }
     }
 
@@ -75,12 +97,21 @@ public class MessageService {
         return messageList;
     }
 
-    public Message updateMessageById(Message message, UUID id) {
+    public Message updateMessageById(Message message, UUID id) throws ServiceUnavailableException {
         if (messageRepository.findById(id).isEmpty()) {
             throw new NotFoundException("Message with id " + id + " does not exist.");
         }
 
-        return messageRepository.save(message);
+        try {
+            if (getUser(message.getSender()) != null || getUser(message.getReceiver()) != null) {
+                return messageRepository.save(message);
+            } else {
+                throw new BadRequestException("User or worker does not exist.");
+            }
+        } catch (Exception exception) {
+            throw exception;
+        }
+
     }
 
     public Message deleteMessageById(UUID id){

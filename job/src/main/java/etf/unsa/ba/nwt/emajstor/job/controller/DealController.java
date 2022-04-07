@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.ResourceAccessException;
 
+import javax.naming.ServiceUnavailableException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -34,7 +36,7 @@ public class DealController {
     private final DealService dealService;
 
     @PostMapping
-    public ResponseEntity<Deal> addDeal(@RequestBody @Valid Deal deal) {
+    public ResponseEntity<Deal> addDeal(@RequestBody @Valid Deal deal) throws ServiceUnavailableException {
         return ResponseEntity.ok(dealService.addDeal(deal));
     }
 
@@ -49,12 +51,12 @@ public class DealController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Deal> updateDealById(@PathVariable UUID id, @RequestBody @Valid Deal deal) {
+    public ResponseEntity<Deal> updateDealById(@PathVariable UUID id, @RequestBody @Valid Deal deal) throws ServiceUnavailableException {
         return ResponseEntity.ok(dealService.updateDealById(deal, id));
     }
 
     @PutMapping
-    public ResponseEntity<Deal> updateDeal(@RequestBody @Valid Deal deal) {
+    public ResponseEntity<Deal> updateDeal(@RequestBody @Valid Deal deal) throws ServiceUnavailableException {
         return ResponseEntity.ok(dealService.updateDealById(deal, deal.getId()));
     }
 
@@ -66,7 +68,7 @@ public class DealController {
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity<Deal> updateDeal(@PathVariable String id, @RequestBody JsonPatch patch) {
+    public ResponseEntity<Deal> updateDeal(@PathVariable String id, @RequestBody JsonPatch patch) throws ServiceUnavailableException {
         try {
             Deal deal = dealService.getDealById(UUID.fromString(id));
             Deal dealPatched = applyPatchToDeal(patch, deal);
@@ -76,6 +78,8 @@ public class DealController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (ResourceAccessException ex) {
+            throw new ServiceUnavailableException("Error while communicating with another microservice.");
         }
     }
 }

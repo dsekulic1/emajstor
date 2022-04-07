@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.client.ResourceAccessException;
 
+import javax.mail.MessagingException;
+import javax.naming.ServiceUnavailableException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +36,7 @@ public class MessageController {
     private final MessageService messageService;
 
     @PostMapping
-    public ResponseEntity<Message> addMessage(@RequestBody @Valid Message message) {
+    public ResponseEntity<Message> addMessage(@RequestBody @Valid Message message) throws ServiceUnavailableException, MessagingException {
         return ResponseEntity.ok(messageService.addMessage(message));
     }
 
@@ -58,7 +61,7 @@ public class MessageController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Message> updateMessageById(@PathVariable UUID id, @RequestBody @Valid Message message ) {
+    public ResponseEntity<Message> updateMessageById(@PathVariable UUID id, @RequestBody @Valid Message message ) throws ServiceUnavailableException {
         return ResponseEntity.ok(messageService.updateMessageById(message, id));
     }
 
@@ -75,7 +78,7 @@ public class MessageController {
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity<Message> updateReview(@PathVariable String id, @RequestBody JsonPatch patch) {
+    public ResponseEntity<Message> updateReview(@PathVariable String id, @RequestBody JsonPatch patch) throws ServiceUnavailableException {
         try {
             Message message = messageService.getMessageById(UUID.fromString(id));
             Message messagePatched = applyPatchToMessage(patch, message);
@@ -85,6 +88,8 @@ public class MessageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (ResourceAccessException ex) {
+            throw new ServiceUnavailableException("Error while communicating with another microservice.");
         }
     }
 

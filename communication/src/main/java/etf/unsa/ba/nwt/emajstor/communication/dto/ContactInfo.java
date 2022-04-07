@@ -9,6 +9,9 @@ public class ContactInfo {
     private String email;
     private String number;
 
+    public ContactInfo() {
+    }
+
     public ContactInfo(UUID id, String firstName, String lastName, String email, String number) {
         this.id = id;
         this.firstName = firstName;
@@ -55,5 +58,9 @@ public class ContactInfo {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
     }
 }

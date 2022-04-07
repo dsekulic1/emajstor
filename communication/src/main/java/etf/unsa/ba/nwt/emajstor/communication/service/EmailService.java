@@ -1,5 +1,6 @@
 package etf.unsa.ba.nwt.emajstor.communication.service;
 
+import etf.unsa.ba.nwt.emajstor.communication.dto.User;
 import etf.unsa.ba.nwt.emajstor.communication.model.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,8 @@ import org.thymeleaf.context.Context;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Service
@@ -46,5 +49,17 @@ public class EmailService {
         message.setText(email.getText());
 
         emailSender.send(message);
+    }
+
+    public void sendNotification(final User sender, final User receiver) throws MessagingException {
+        Email email = new Email();
+        email.setSubject("New messages");
+        email.setTemplate("notification");
+        email.setTo(receiver.getContactInfo().getEmail());
+        Map<String, Object> properties =  new HashMap<>();
+        properties.put("name", receiver.getContactInfo().getFullName());
+        properties.put("sender", sender.getContactInfo().getFullName());
+        email.setProperties(properties);
+        sendHtmlMessage(email);
     }
 }

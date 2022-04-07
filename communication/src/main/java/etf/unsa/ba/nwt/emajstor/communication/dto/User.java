@@ -14,6 +14,9 @@ public class User {
     private LocalDateTime dateCreated;
     private ContactInfo contactInfo;
 
+    public User() {
+    }
+
     public User(UUID id, String username, String password, String city, Point location, LocalDateTime dateCreated, ContactInfo contactInfo) {
         this.id = id;
         this.username = username;

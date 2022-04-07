@@ -2,14 +2,14 @@ package etf.unsa.ba.nwt.emajstor.communication.model;
 
 import lombok.Data;
 
-
 import java.util.Map;
 
 @Data
 public class Email {
+
     String to;
 
-    String from;
+    final String from = "slanjeobavijesti@gmail.com";
 
     String subject;
 
@@ -22,16 +22,14 @@ public class Email {
     public Email() {
     }
 
-    public Email(String to, String from, String subject, String text) {
+    public Email(String to, String subject, String text) {
         this.to = to;
-        this.from = from;
         this.subject = subject;
         this.text = text;
     }
 
-    public Email(String to, String from, String subject, String text, String template, Map<String, Object> properties) {
+    public Email(String to, String subject, String text, String template, Map<String, Object> properties) {
         this.to = to;
-        this.from = from;
         this.subject = subject;
         this.text = text;
         this.template = template;
@@ -40,10 +38,6 @@ public class Email {
 
     public void setTo(String to) {
         this.to = to;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
     }
 
     public void setSubject(String subject) {
