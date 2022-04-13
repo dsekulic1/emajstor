@@ -20,4 +20,9 @@ public class ReviewApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
+
+	@Bean
+	public RestTemplate restTemplateBasic() {
+		return new RestTemplate();
+	}
 }

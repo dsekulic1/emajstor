@@ -11,7 +11,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/test_db
     username: postgres
-    password:
+    password: user1234
 server:
   port: 8083
   error:

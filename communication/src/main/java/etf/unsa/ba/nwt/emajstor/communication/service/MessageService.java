@@ -9,6 +9,7 @@ import etf.unsa.ba.nwt.emajstor.communication.repositories.MessageRepository;
 import etf.unsa.ba.nwt.emajstor.communication.repositories.NotificationHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
@@ -28,6 +29,18 @@ public class MessageService {
     private final NotificationHistoryRepository notificationHistoryRepository;
     private final EmailService emailService;
     private final RestTemplate restTemplate;
+    private static String grpcUrl;
+    private static int grpcPort;
+
+    @Value("${app.grpc-url}")
+    public void setGrpcUrl(String grpcUrl) {
+        this.grpcUrl = grpcUrl;
+    }
+
+    @Value("${app.grpc-port}")
+    public void setGrpcPort(int grpcPort) {
+        this.grpcPort = grpcPort;
+    }
 
     public List<Message> getAllMessages() { return  messageRepository.findAll(); }
 

@@ -1,0 +1,29 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+option java_multiple_files = true;
+option java_package = "etf.unsa.ba.nwt.emajstor.systemevents";
+
+service EventService {
+  rpc log(EventRequest) returns (EventResponse);
+}
+
+message EventRequest {
+  enum actionType {
+    CREATE = 0;
+    DELETE = 1;
+    GET = 2;
+    UPDATE = 3;
+  }
+
+  google.protobuf.Timestamp date = 1;
+  string microservice = 2;
+  string user = 3;
+  actionType action = 4;
+  string resource = 5;
+  string status = 6;
+}
+
+message EventResponse {
+  string message = 1;
+  string status = 2;
+}
