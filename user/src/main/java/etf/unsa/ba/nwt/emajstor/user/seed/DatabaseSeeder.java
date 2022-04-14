@@ -66,7 +66,6 @@ public class DatabaseSeeder {
         user.setDateCreated(LocalDateTime.now());
         user.setContactInfo(contactInfo);
         user = userRepository.save(user);
-        System.out.printf("Created user with UUID: %s\n", user.getId().toString());
         return user;
     }
 }

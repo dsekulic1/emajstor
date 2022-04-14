@@ -62,12 +62,12 @@ public class ReviewService {
 
     public Review deleteReviewById(UUID id) {
         Review review = getReviewById(id);
-        if(review == null) {
-            registerEvent(EventRequest.actionType.CREATE, "/api/review", "404");
-            throw new NotFoundException("User does not exist.");
+        if (review == null) {
+            registerEvent(EventRequest.actionType.DELETE, "/api/review/{id}", "404");
+            throw new NotFoundException("Review does not exist.");
         }
         reviewRepository.deleteById(id);
-        registerEvent(EventRequest.actionType.DELETE, "/api/review", "200");
+        registerEvent(EventRequest.actionType.DELETE, "/api/review/{id}", "200");
         return review;
     }
 
@@ -139,8 +139,6 @@ public class ReviewService {
                     .setResource(resource)
                     .setStatus(status)
                     .build());
-
-            System.out.println(eventResponse.getMessage());
         } catch (StatusRuntimeException e) {
             System.out.println("System event microservice not running");
         }

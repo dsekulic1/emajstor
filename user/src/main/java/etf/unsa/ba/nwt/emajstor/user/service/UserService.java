@@ -144,8 +144,6 @@ public class UserService {
                     .setResource(resource)
                     .setStatus(status)
                     .build());
-
-            System.out.println(eventResponse.getMessage());
         } catch (StatusRuntimeException e) {
             System.out.println("System event microservice not running");
         }

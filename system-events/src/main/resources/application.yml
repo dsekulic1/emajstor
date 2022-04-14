@@ -1,27 +1,7 @@
 spring:
-  cloud:
-    config:
-      import-check:
-        enabled: false
   application:
-    name: system-events-service
-  main:
-    allow-circular-references: true
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  datasource:
-    url: ## populate from secret
-    username: ## populate from secret
-    password: ## populate from secret
-server:
-  port: 8085
-  error:
-    include-message: always
-    include-stacktrace: never
-app:
-  grpc-port: 8090
+    name: system-events
+  profiles:
+    active: development
+  config:
+    import: optional:configserver:http://root:root@localhost:8888
