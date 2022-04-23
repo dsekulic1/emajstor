@@ -49,8 +49,6 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.updateReviewById(review, id));
     }
 
-    // dodavavanje nove metode
-
     private Review applyPatchToReview(
             JsonPatch patch, Review targetReview) throws JsonPatchException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
