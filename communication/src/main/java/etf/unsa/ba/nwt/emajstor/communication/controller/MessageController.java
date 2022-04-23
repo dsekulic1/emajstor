@@ -7,7 +7,6 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import etf.unsa.ba.nwt.emajstor.communication.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.communication.model.Message;
 import etf.unsa.ba.nwt.emajstor.communication.service.MessageService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,10 +29,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/messages")
-@RequiredArgsConstructor
 public class MessageController {
 
     private final MessageService messageService;
+
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @PostMapping
     public ResponseEntity<Message> addMessage(@RequestBody @Valid Message message) throws ServiceUnavailableException, MessagingException {

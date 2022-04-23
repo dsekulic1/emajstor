@@ -8,7 +8,6 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import etf.unsa.ba.nwt.emajstor.job.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.job.model.Job;
 import etf.unsa.ba.nwt.emajstor.job.service.JobService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +25,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/job")
-@RequiredArgsConstructor
-public class    JobController {
+public class JobController {
 
     private final JobService jobService;
+
+    public JobController(JobService jobService) {
+        this.jobService = jobService;
+    }
 
     @PostMapping
     public ResponseEntity<Job> addJob(@RequestBody @Valid Job job) {
