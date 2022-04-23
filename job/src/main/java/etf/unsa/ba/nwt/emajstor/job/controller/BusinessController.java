@@ -8,7 +8,6 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import etf.unsa.ba.nwt.emajstor.job.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.job.model.Business;
 import etf.unsa.ba.nwt.emajstor.job.service.BusinessService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,10 +26,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/business")
-@RequiredArgsConstructor
 public class BusinessController {
 
     private final BusinessService businessService;
+
+    public BusinessController(BusinessService businessService) {
+        this.businessService = businessService;
+    }
 
     @PostMapping
     public ResponseEntity<Business> addBusiness(@RequestBody @Valid Business business) {

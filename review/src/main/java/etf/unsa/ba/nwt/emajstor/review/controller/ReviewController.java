@@ -7,7 +7,6 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import etf.unsa.ba.nwt.emajstor.review.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.review.model.Review;
 import etf.unsa.ba.nwt.emajstor.review.service.ReviewService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +19,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/review")
-@RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
+
+    public ReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
 
     @PostMapping
     public ResponseEntity<Review> addReview(@RequestBody @Valid Review review) throws ServiceUnavailableException {
