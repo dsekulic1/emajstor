@@ -1,0 +1,38 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+  application:
+    name: apigateway
+  profiles:
+    active: development
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 20000
+zuul:
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+  routes:
+    user:
+      service-id: user
+      user-service:
+        sensitive-headers: 'Cookie,Set-Cookie'
+    job:
+      service-id: job
+    communication:
+      service-id: communication
+    review:
+      service-id: review
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: 'http://localhost:8761/eureka'
+server:
+  port: 8086
+  error:
+    include-message: always
+    include-stacktrace: never
+app:
+  jwtSecret: ## secret
+  jwtExpiration: 43200000

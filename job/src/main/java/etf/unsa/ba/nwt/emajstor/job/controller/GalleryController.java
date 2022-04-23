@@ -7,9 +7,7 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import etf.unsa.ba.nwt.emajstor.job.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.job.model.Gallery;
-import etf.unsa.ba.nwt.emajstor.job.model.Job;
 import etf.unsa.ba.nwt.emajstor.job.service.GalleryService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,10 +26,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/gallery")
-@RequiredArgsConstructor
 public class GalleryController {
 
     private final GalleryService galleryService;
+
+    public GalleryController(GalleryService galleryService) {
+        this.galleryService = galleryService;
+    }
 
     @PostMapping
     public ResponseEntity<Gallery> addGallery(@RequestBody @Valid Gallery gallery) {

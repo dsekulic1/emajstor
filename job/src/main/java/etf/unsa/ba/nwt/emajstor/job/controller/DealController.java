@@ -7,10 +7,7 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import etf.unsa.ba.nwt.emajstor.job.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.job.model.Deal;
-import etf.unsa.ba.nwt.emajstor.job.model.Job;
 import etf.unsa.ba.nwt.emajstor.job.service.DealService;
-import etf.unsa.ba.nwt.emajstor.job.service.JobService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +27,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/deal")
-@RequiredArgsConstructor
 public class DealController {
 
     private final DealService dealService;
+
+    public DealController(DealService dealService) {
+        this.dealService = dealService;
+    }
 
     @PostMapping
     public ResponseEntity<Deal> addDeal(@RequestBody @Valid Deal deal) throws ServiceUnavailableException {
