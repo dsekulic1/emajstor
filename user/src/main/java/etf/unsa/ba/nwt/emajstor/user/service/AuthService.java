@@ -19,12 +19,17 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ContactInfoRepository contactInfoRepository;
+
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, ContactInfoRepository contactInfoRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.contactInfoRepository = contactInfoRepository;
+    }
 
     public User signup(SignupRequest signupRequest) {
         if (userRepository.existsByUsernameIgnoreCase(signupRequest.getUsername())) {

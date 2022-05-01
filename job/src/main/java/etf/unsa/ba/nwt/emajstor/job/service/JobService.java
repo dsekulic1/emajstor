@@ -3,7 +3,6 @@ package etf.unsa.ba.nwt.emajstor.job.service;
 import com.google.protobuf.Timestamp;
 import etf.unsa.ba.nwt.emajstor.job.exception.BadRequestException;
 import etf.unsa.ba.nwt.emajstor.job.exception.NotFoundException;
-import etf.unsa.ba.nwt.emajstor.job.model.Gallery;
 import etf.unsa.ba.nwt.emajstor.job.model.Job;
 import etf.unsa.ba.nwt.emajstor.job.repositories.JobRepository;
 import etf.unsa.ba.nwt.emajstor.systemevents.event.EventRequest;
