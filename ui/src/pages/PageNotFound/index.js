@@ -9,9 +9,12 @@ const PageNotFound = () => {
       404
       <br />
       Page not found
-      <p style={{ textAlign: 'center' }}>
-        <Link to='/'>Go to Home </Link>
-      </p>
+      <br />
+      <div>
+        <p style={{ textAlign: 'center' }}>
+          <Link to='/'>Go to Home </Link>
+        </p>
+      </div>
     </div>
   )
 }
