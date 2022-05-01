@@ -19,7 +19,7 @@ public class SignupRequest {
     private String email;
 
     @NotBlank(message = "Phone number can't be blank")
-    @Size(min = 9, max = 17, message = "Phone number must contain between 9 and 17 characters")
+    @Size(min = 8, max = 17, message = "Phone number must contain between 9 and 17 characters")
     private String number;
 
     @NotBlank(message = "Username can't be blank")
