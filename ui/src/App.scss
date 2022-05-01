@@ -1,0 +1,10 @@
+.app-container {
+  text-align: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+.main-container {
+  padding: 0 2% 80px 2%;
+  min-height: calc(100vh - 110px);
+}
