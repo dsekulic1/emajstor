@@ -20,7 +20,6 @@ const DirectChat = () => {
   }
 
   const onMessage = async (chatId, message) => {
-    console.log('usao')
     const payload = {
       text: message.text.replace('<p>', '').replace('</p>', ''),
       senderUsername: message.sender.username,

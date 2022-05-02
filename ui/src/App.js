@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 //import Header from 'shared/Header'
 import MyRoutes from 'routing/MyRoutes'
-//import Footer from 'shared/Footer'
+import Footer from 'components/Sections/Footer'
 import Navbar from 'shared/Header'
 
 import 'App.scss'
@@ -16,6 +16,7 @@ function App() {
         <div className='main-container'>
           <MyRoutes />
         </div>
+        <Footer />
       </Router>
     </div>
   )

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { useUserContext } from 'AppContext'
+import React from 'react'
+import Header from '../../components/Sections/Header'
 
 const LandingPage = () => {
-  const { loggedIn } = useUserContext()
   return (
-    <div>
-      <h1>HELLO</h1>
-    </div>
+    <>
+      <Header />
+    </>
   )
 }
 
