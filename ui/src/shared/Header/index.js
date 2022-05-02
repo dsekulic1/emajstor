@@ -10,8 +10,9 @@ import {
 import { Link } from 'react-router-dom'
 import DrawerComponent from './Drawer'
 import { ReactComponent as ReactLogo } from '../../images/logo.svg'
+import { removeSession } from 'utilities/localStorage'
+import { useUserContext } from 'AppContext'
 import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
@@ -44,7 +45,12 @@ function Navbar() {
   const classes = useStyles()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-
+  const { loggedIn } = useUserContext()
+  const { setLoggedIn } = useUserContext()
+  const handleLogout = () => {
+    setLoggedIn(false)
+    removeSession()
+  }
   return (
     <AppBar position='static'>
       <CssBaseline />
@@ -58,18 +64,24 @@ function Navbar() {
             <Link to='/' className={classes.link}>
               Home
             </Link>
-            <Link to='/login' className={classes.link}>
-              Login
-            </Link>
-            <Link to='/about' className={classes.link}>
-              About
-            </Link>
             <Link to='/contact' className={classes.link}>
               Contact
             </Link>
-            <Link to='/faq' className={classes.link}>
-              FAQ
-            </Link>
+            {loggedIn && (
+              <Link to='/chat' className={classes.link}>
+                Chat
+              </Link>
+            )}
+
+            {!loggedIn ? (
+              <Link to='/login' className={classes.link}>
+                Login
+              </Link>
+            ) : (
+              <Link to='/' onClick={handleLogout} className={classes.link}>
+                Signout
+              </Link>
+            )}
           </div>
         )}
       </Toolbar>

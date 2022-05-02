@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ChatEngine, getOrCreateChat } from 'react-chat-engine'
 import { getUser } from '../../utilities/localStorage'
+import { addChatMessage } from 'api/chatApi/chat'
 
 const DirectChat = () => {
   // The useState hook initially sets the username to an empty string
@@ -16,6 +17,16 @@ const DirectChat = () => {
       { is_direct_chat: true, usernames: [username] },
       () => setUsername('')
     )
+  }
+
+  const onMessage = async (chatId, message) => {
+    console.log('usao')
+    const payload = {
+      text: message.text.replace('<p>', '').replace('</p>', ''),
+      senderUsername: message.sender.username,
+      chatId: chatId,
+    }
+    await addChatMessage(payload)
   }
 
   const displayChatInterface = (creds) => {
@@ -44,7 +55,9 @@ const DirectChat = () => {
       projectID={process.env.REACT_APP_PROJECT_ID}
       userName={user}
       userSecret={password}
-      onNewMessage={(chatId, message) => console.log(chatId, message)}
+      onNewMessage={(chatId, message) => {
+        onMessage(chatId, message)
+      }}
       displayNewChatInterface={(credentials) =>
         displayChatInterface(credentials)
       }
