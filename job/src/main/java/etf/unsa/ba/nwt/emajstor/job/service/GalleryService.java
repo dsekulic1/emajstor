@@ -1,14 +1,14 @@
 package etf.unsa.ba.nwt.emajstor.job.service;
 
 import com.google.protobuf.Timestamp;
+import etf.unsa.ba.nwt.emajstor.job.event.EventRequest;
+import etf.unsa.ba.nwt.emajstor.job.event.EventResponse;
+import etf.unsa.ba.nwt.emajstor.job.event.EventServiceGrpc;
 import etf.unsa.ba.nwt.emajstor.job.exception.BadRequestException;
 import etf.unsa.ba.nwt.emajstor.job.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.job.model.Deal;
 import etf.unsa.ba.nwt.emajstor.job.model.Gallery;
 import etf.unsa.ba.nwt.emajstor.job.repositories.GalleryRepository;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventRequest;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventResponse;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -22,11 +22,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class GalleryService {
     private final GalleryRepository galleryRepository;
     private static String grpcUrl;
     private static int grpcPort;
+
+    public GalleryService(GalleryRepository galleryRepository) {
+        this.galleryRepository = galleryRepository;
+    }
 
     @Value("${app.grpc-url}")
     public void setGrpcUrl(String grpcUrl) {

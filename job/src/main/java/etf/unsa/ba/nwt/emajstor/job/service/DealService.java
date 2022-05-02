@@ -2,18 +2,16 @@ package etf.unsa.ba.nwt.emajstor.job.service;
 
 import com.google.protobuf.Timestamp;
 import etf.unsa.ba.nwt.emajstor.job.dto.User;
+import etf.unsa.ba.nwt.emajstor.job.event.EventRequest;
+import etf.unsa.ba.nwt.emajstor.job.event.EventResponse;
+import etf.unsa.ba.nwt.emajstor.job.event.EventServiceGrpc;
 import etf.unsa.ba.nwt.emajstor.job.exception.BadRequestException;
 import etf.unsa.ba.nwt.emajstor.job.exception.NotFoundException;
-import etf.unsa.ba.nwt.emajstor.job.model.Business;
 import etf.unsa.ba.nwt.emajstor.job.model.Deal;
 import etf.unsa.ba.nwt.emajstor.job.repositories.DealRepository;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventRequest;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventResponse;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
@@ -26,13 +24,17 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class DealService {
 
     private final DealRepository dealRepository;
     private final RestTemplate restTemplate;
     private static String grpcUrl;
     private static int grpcPort;
+
+    public DealService(DealRepository dealRepository, RestTemplate restTemplate) {
+        this.dealRepository = dealRepository;
+        this.restTemplate = restTemplate;
+    }
 
     @Value("${app.grpc-url}")
     public void setGrpcUrl(String grpcUrl) {

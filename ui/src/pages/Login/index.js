@@ -23,6 +23,7 @@ import {
   setSession,
 } from 'utilities/localStorage'
 import { useUserContext } from 'AppContext'
+import axios from 'axios'
 
 function Copyright(props) {
   return (
@@ -55,18 +56,28 @@ export default function SignIn() {
     try {
       setLoading(true)
       console.log(values)
-      const response = await login(values)
-      message.success('Successfully logged in')
-      setLoading(false)
-      setSession(response)
-      if (isTrue) {
-        console.log('usao')
-        setRememberInfo(values.username, values.password)
-      } else {
-        removeRememberInfo()
+      const headers = {
+        'PRIVATE-KEY': process.env.REACT_APP_USER_SECRET,
+        'User-Name': values.username,
+        'User-Secret': values.password,
       }
-      history.goBack()
-      setLoggedIn(true)
+      await axios
+        .get('https://api.chatengine.io/users/', {
+          headers: headers,
+        })
+        .then(async () => {
+          const response = await login(values)
+          message.success('Successfully logged in')
+          setLoading(false)
+          setSession(response)
+          if (isTrue) {
+            setRememberInfo(values.username, values.password)
+          } else {
+            removeRememberInfo()
+          }
+          history.goBack()
+          setLoggedIn(true)
+        })
     } catch (error) {
       console.log(error)
 

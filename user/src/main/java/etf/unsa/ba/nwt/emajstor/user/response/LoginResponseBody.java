@@ -9,6 +9,7 @@ public class LoginResponseBody {
     private String jwt;
     private UUID id;
     private String username;
+    private String password;
     private String city;
     private double locationLongitude;
     private double locationLatitude;
@@ -27,6 +28,23 @@ public class LoginResponseBody {
         this.jwt = jwt;
         this.id = id;
         this.username = username;
+        this.city = city;
+        this.locationLongitude = locationLongitude;
+        this.locationLatitude = locationLatitude;
+        this.dateCreated = dateCreated;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.number = number;
+        this.roles = roles;
+    }
+
+    public LoginResponseBody(String tokenType, String jwt, UUID id, String username, String password, String city, double locationLongitude, double locationLatitude, LocalDateTime dateCreated, String firstName, String lastName, String email, String number, List<String> roles) {
+        this.tokenType = tokenType;
+        this.jwt = jwt;
+        this.id = id;
+        this.username = username;
+        this.password = password;
         this.city = city;
         this.locationLongitude = locationLongitude;
         this.locationLatitude = locationLatitude;
@@ -140,5 +158,13 @@ public class LoginResponseBody {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

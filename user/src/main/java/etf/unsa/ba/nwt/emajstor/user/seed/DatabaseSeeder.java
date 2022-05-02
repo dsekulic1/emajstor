@@ -13,10 +13,14 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-@RequiredArgsConstructor
 public class DatabaseSeeder {
     private final UserRepository userRepository;
     private final ContactInfoRepository contactInfoRepository;
+
+    public DatabaseSeeder(UserRepository userRepository, ContactInfoRepository contactInfoRepository) {
+        this.userRepository = userRepository;
+        this.contactInfoRepository = contactInfoRepository;
+    }
 
     @EventListener
     public void seed(final ContextRefreshedEvent event) {

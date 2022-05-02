@@ -1,14 +1,14 @@
 package etf.unsa.ba.nwt.emajstor.job.service;
 
 import com.google.protobuf.Timestamp;
+import etf.unsa.ba.nwt.emajstor.job.event.EventRequest;
+import etf.unsa.ba.nwt.emajstor.job.event.EventResponse;
+import etf.unsa.ba.nwt.emajstor.job.event.EventServiceGrpc;
 import etf.unsa.ba.nwt.emajstor.job.exception.BadRequestException;
 import etf.unsa.ba.nwt.emajstor.job.exception.ConflictException;
 import etf.unsa.ba.nwt.emajstor.job.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.job.model.Business;
 import etf.unsa.ba.nwt.emajstor.job.repositories.BusinessRepository;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventRequest;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventResponse;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;

@@ -10,9 +10,12 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-@RequiredArgsConstructor
 public class DatabaseSeeder {
     private final ReviewRepository reviewRepository;
+
+    public DatabaseSeeder(ReviewRepository reviewRepository) {
+        this.reviewRepository = reviewRepository;
+    }
 
     @EventListener
     public void seed(final ContextRefreshedEvent event) {

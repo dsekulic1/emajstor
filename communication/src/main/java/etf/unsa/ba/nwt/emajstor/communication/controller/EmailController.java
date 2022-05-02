@@ -13,10 +13,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/email")
-@RequiredArgsConstructor
 public class EmailController  {
 
     private final EmailService emailSenderService;
+
+    public EmailController(final EmailService emailSenderService) {
+        this.emailSenderService = emailSenderService;
+    }
 
     @PostMapping("/send/html")
     public void sendHtmlMessage(@RequestBody Email email) throws MessagingException {

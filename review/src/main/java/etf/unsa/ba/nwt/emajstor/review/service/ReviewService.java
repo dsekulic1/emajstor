@@ -26,12 +26,16 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final RestTemplate restTemplate;
     private static String grpcUrl;
     private static int grpcPort;
+
+    public ReviewService(ReviewRepository reviewRepository, RestTemplate restTemplate) {
+        this.reviewRepository = reviewRepository;
+        this.restTemplate = restTemplate;
+    }
 
     @Value("${app.grpc-url}")
     public void setGrpcUrl(String grpcUrl) {

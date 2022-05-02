@@ -24,12 +24,16 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final ContactInfoRepository contactInfoRepository;
     private static String grpcUrl;
     private static int grpcPort;
+
+    public UserService(UserRepository userRepository, ContactInfoRepository contactInfoRepository) {
+        this.userRepository = userRepository;
+        this.contactInfoRepository = contactInfoRepository;
+    }
 
     @Value("${app.grpc-url}")
     public void setGrpcUrl(String grpcUrl) {

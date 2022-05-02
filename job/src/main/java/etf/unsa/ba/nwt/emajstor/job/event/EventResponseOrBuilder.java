@@ -1,4 +1,4 @@
-package etf.unsa.ba.nwt.emajstor.systemevents.event;
+package etf.unsa.ba.nwt.emajstor.job.event;
 
 
 public interface EventResponseOrBuilder extends

@@ -1,17 +1,16 @@
 package etf.unsa.ba.nwt.emajstor.job.service;
 
 import com.google.protobuf.Timestamp;
+import etf.unsa.ba.nwt.emajstor.job.event.EventRequest;
+import etf.unsa.ba.nwt.emajstor.job.event.EventResponse;
+import etf.unsa.ba.nwt.emajstor.job.event.EventServiceGrpc;
 import etf.unsa.ba.nwt.emajstor.job.exception.BadRequestException;
 import etf.unsa.ba.nwt.emajstor.job.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.job.model.Job;
 import etf.unsa.ba.nwt.emajstor.job.repositories.JobRepository;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventRequest;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventResponse;
-import etf.unsa.ba.nwt.emajstor.systemevents.event.EventServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +20,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class JobService {
     private final JobRepository jobRepository;
     private static String grpcUrl;
     private static int grpcPort;
+
+    public JobService(JobRepository jobRepository) {
+        this.jobRepository = jobRepository;
+    }
 
     @Value("${app.grpc-url}")
     public void setGrpcUrl(String grpcUrl) {

@@ -6,6 +6,7 @@ import LandingPage from 'pages/LandingPage'
 import Login from 'pages/Login'
 import Register from 'pages/Register'
 import PageNotFound from 'pages/PageNotFound'
+import DirectChat from 'pages/Chat/DirectChat'
 
 const MyRoutes = () => {
   return (
@@ -13,6 +14,7 @@ const MyRoutes = () => {
       <Route exact path='/' component={LandingPage} />
       <GuestRoute path='/login' component={Login} />
       <GuestRoute path='/register' component={Register} />
+      <Route path='/chat' component={DirectChat} />
       <Route component={PageNotFound} />
     </Switch>
   )

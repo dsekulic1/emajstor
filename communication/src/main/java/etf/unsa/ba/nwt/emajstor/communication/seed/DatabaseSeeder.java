@@ -14,10 +14,14 @@ import java.util.UUID;
 
 
 @Component
-@RequiredArgsConstructor
 public class DatabaseSeeder {
     private final NotificationHistoryRepository notificationHistoryRepository;
     private final MessageRepository messageRepository;
+
+    public DatabaseSeeder(NotificationHistoryRepository notificationHistoryRepository, MessageRepository messageRepository) {
+        this.notificationHistoryRepository = notificationHistoryRepository;
+        this.messageRepository = messageRepository;
+    }
 
     @EventListener
     public void seed(final ContextRefreshedEvent event) {

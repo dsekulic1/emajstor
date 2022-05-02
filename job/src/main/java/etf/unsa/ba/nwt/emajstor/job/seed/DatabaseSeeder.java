@@ -15,12 +15,17 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-@RequiredArgsConstructor
 public class DatabaseSeeder {
 
     private final GalleryRepository galleryRepository;
     private final BusinessRepository businessRepository;
     private final JobRepository jobRepository;
+
+    public DatabaseSeeder(GalleryRepository galleryRepository, BusinessRepository businessRepository, JobRepository jobRepository) {
+        this.galleryRepository = galleryRepository;
+        this.businessRepository = businessRepository;
+        this.jobRepository = jobRepository;
+    }
 
     @EventListener
     public void seed(final ContextRefreshedEvent event) {

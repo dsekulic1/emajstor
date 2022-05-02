@@ -34,5 +34,5 @@ server:
     include-message: always
     include-stacktrace: never
 app:
-  jwtSecret: ## secret
+  jwtSecret: BV:3pDW4Bg\>fBcE
   jwtExpiration: 43200000

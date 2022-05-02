@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { loginUrl, homeUrl } from 'utilities/appUrls'
 import { setSession } from 'utilities/localStorage'
 import { useUserContext } from 'AppContext'
+import axios from 'axios'
 
 function Copyright(props) {
   return (
@@ -52,16 +53,33 @@ export default function Register() {
   const onFinish = async (values) => {
     try {
       setLoading(true)
-      const response = await signUp(values)
-      message.success('Successfully registered')
-      setLoading(false)
-      setSession(response)
-      history.goBack()
-      setLoggedIn(true)
+      const chatValues = {
+        username: values.username,
+        first_name: values.firstName,
+        last_name: values.lastName,
+        secret: values.password,
+        email: values.email,
+      }
+
+      const headers = {
+        'PRIVATE-KEY': process.env.REACT_APP_USER_SECRET,
+      }
+      await axios
+        .post('https://api.chatengine.io/users/', chatValues, {
+          headers: headers,
+        })
+        .then(async () => {
+          const response = await signUp(values)
+          message.success('Successfully registered')
+          setLoading(false)
+          setSession(response)
+          history.goBack()
+          setLoggedIn(true)
+        })
     } catch (error) {
       setLoading(false)
       console.log(error)
-      // message.warning(error.response.data.message)
+      message.warning(error.response.data.message)
     }
   }
 
@@ -79,7 +97,6 @@ export default function Register() {
       email: data.get('email'),
       number: data.get('number'),
     }
-    console.log(values)
     onFinish(values)
   }
 

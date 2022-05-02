@@ -32,7 +32,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class MessageService {
     private final MessageRepository messageRepository;
     private final NotificationHistoryRepository notificationHistoryRepository;
@@ -40,6 +39,13 @@ public class MessageService {
     private final RestTemplate restTemplate;
     private static String grpcUrl;
     private static int grpcPort;
+
+    public MessageService(MessageRepository messageRepository, NotificationHistoryRepository notificationHistoryRepository, EmailService emailService, RestTemplate restTemplate) {
+        this.messageRepository = messageRepository;
+        this.notificationHistoryRepository = notificationHistoryRepository;
+        this.emailService = emailService;
+        this.restTemplate = restTemplate;
+    }
 
     @Value("${app.grpc-url}")
     public void setGrpcUrl(String grpcUrl) {

@@ -57,7 +57,6 @@ public class AuthService {
         // postavka role
         p.setRole(Role.ROLE_USER);
         User user = userRepository.save(p);
-        user.setPassword(null);
         return user;
     }
 
@@ -88,7 +87,6 @@ public class AuthService {
         if (user == null || !passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new UsernameNotFoundException("Wrong username or password");
         }
-        user.setPassword(null);
         return user;
     }
 }
