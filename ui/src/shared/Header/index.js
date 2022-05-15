@@ -66,20 +66,20 @@ function Navbar() {
               <Link to='/' className={classes.link}>
                 Home
               </Link>
-              {loggedIn && (
-                <Link to='/chat' className={classes.link}>
-                  Chat
-                </Link>
-              )}
 
               {!loggedIn ? (
                 <Link to='/login' className={classes.link}>
                   Login
                 </Link>
               ) : (
-                <Link to='/' onClick={handleLogout} className={classes.link}>
-                  Signout
-                </Link>
+                <>
+                  <Link to='/userpage' className={classes.link}>
+                    Jobs
+                  </Link>
+                  <Link to='/' onClick={handleLogout} className={classes.link}>
+                    Signout
+                  </Link>
+                </>
               )}
             </div>
           </>

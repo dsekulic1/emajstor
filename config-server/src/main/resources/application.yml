@@ -9,8 +9,8 @@ spring:
       server:
         git:
           uri: https://github.com/dsekulic1/config-repo.git
-          username: ## from secret
-          password: ## from secret
+          username: dsekulic1@etf.unsa.ba
+          password: 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
           skip-ssl-validation: true
           ignore-local-ssh-settings: true
           clone-on-start: true

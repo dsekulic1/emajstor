@@ -31,7 +31,7 @@ function DrawerComponent() {
           {loggedIn && (
             <ListItem onClick={() => setOpenDrawer(false)}>
               <ListItemText>
-                <Link to='/chat'>Chat</Link>
+                <Link to='/userpage'>Job</Link>{' '}
               </ListItemText>
             </ListItem>
           )}
@@ -40,9 +40,11 @@ function DrawerComponent() {
               {!loggedIn ? (
                 <Link to='/login'>Login</Link>
               ) : (
-                <Link to='/' onClick={handleLogout}>
-                  Signout
-                </Link>
+                <>
+                  <Link to='/' onClick={handleLogout}>
+                    Signout
+                  </Link>
+                </>
               )}
             </ListItemText>
           </ListItem>

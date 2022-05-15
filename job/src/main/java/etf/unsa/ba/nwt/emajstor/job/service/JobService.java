@@ -1,6 +1,7 @@
 package etf.unsa.ba.nwt.emajstor.job.service;
 
 import com.google.protobuf.Timestamp;
+import etf.unsa.ba.nwt.emajstor.job.dto.User;
 import etf.unsa.ba.nwt.emajstor.job.event.EventRequest;
 import etf.unsa.ba.nwt.emajstor.job.event.EventResponse;
 import etf.unsa.ba.nwt.emajstor.job.event.EventServiceGrpc;
@@ -13,8 +14,10 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,11 +25,14 @@ import java.util.UUID;
 @Service
 public class JobService {
     private final JobRepository jobRepository;
+    private final RestTemplate restTemplate;
+
     private static String grpcUrl;
     private static int grpcPort;
 
-    public JobService(JobRepository jobRepository) {
+    public JobService(JobRepository jobRepository, RestTemplate restTemplate) {
         this.jobRepository = jobRepository;
+        this.restTemplate = restTemplate;
     }
 
     @Value("${app.grpc-url}")
@@ -97,6 +103,23 @@ public class JobService {
         }
 
         channel.shutdown();
+    }
+
+    public class EmployeeList {
+        private List<User> users;
+
+        public EmployeeList() {
+            users = new ArrayList<>();
+        }
+
+        public List<User> getUsers() {
+            return users;
+        }
+
+        public void setUsers(List<User> users) {
+            this.users = users;
+        }
+
     }
 
 }

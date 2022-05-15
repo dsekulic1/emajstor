@@ -29,6 +29,8 @@ public class Job {
     @Type(type = "uuid-char")
     private UUID user;
 
+    private String userName;
+
     private double price;
 
     @Enumerated(EnumType.STRING)
@@ -45,17 +47,19 @@ public class Job {
     public Job() {
     }
 
-    public Job(UUID user, double price, PriceType priceType, Business business, Gallery gallery) {
+    public Job(UUID id, UUID user, String userName, double price, PriceType priceType, Business business, Gallery gallery) {
+        this.id = id;
         this.user = user;
+        this.userName = userName;
         this.price = price;
         this.priceType = priceType;
         this.business = business;
         this.gallery = gallery;
     }
 
-    public Job(UUID id, UUID user, double price, PriceType priceType, Business business, Gallery gallery) {
-        this.id = id;
+    public Job(UUID user, String userName, double price, PriceType priceType, Business business, Gallery gallery) {
         this.user = user;
+        this.userName = userName;
         this.price = price;
         this.priceType = priceType;
         this.business = business;
@@ -108,5 +112,13 @@ public class Job {
 
     public void setGallery(Gallery gallery) {
         this.gallery = gallery;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

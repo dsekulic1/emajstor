@@ -40,8 +40,8 @@ public class DatabaseSeeder {
             Business business1 = createBusiness("Stolar");
             Business business2 = createBusiness("Keramicar");
 
-            createJob(UUID.fromString("1dc0bec3-260a-4a50-8916-384128e8a55c"), 3.5, PriceType.PER_HOUR, business1, gallery1);
-            createJob(UUID.fromString("8a351bab-e704-4afb-ab3e-7b27a54168a5"), 80, PriceType.PER_DAY, business2, gallery2);
+            createJob(UUID.fromString("1dc0bec3-260a-4a50-8916-384128e8a55c"), "Davor", 3.5, PriceType.PER_HOUR, business1, gallery1);
+            createJob(UUID.fromString("8a351bab-e704-4afb-ab3e-7b27a54168a5"), "Elmir",80, PriceType.PER_DAY, business2, gallery2);
         }
     }
 
@@ -59,9 +59,10 @@ public class DatabaseSeeder {
         return business;
     }
 
-    private Job createJob(UUID user, double price, PriceType priceType, Business business, Gallery gallery) {
+    private Job createJob(UUID user, String userName, double price, PriceType priceType, Business business, Gallery gallery) {
         Job job = new Job();
         job.setUser(user);
+        job.setUserName(userName);
         job.setPrice(price);
         job.setPriceType(priceType);
         job.setBusiness(business);

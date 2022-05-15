@@ -1,6 +1,7 @@
 package etf.unsa.ba.nwt.emajstor.job.service;
 
 import com.google.protobuf.Timestamp;
+import etf.unsa.ba.nwt.emajstor.job.dto.User;
 import etf.unsa.ba.nwt.emajstor.job.event.EventRequest;
 import etf.unsa.ba.nwt.emajstor.job.event.EventResponse;
 import etf.unsa.ba.nwt.emajstor.job.event.EventServiceGrpc;
@@ -15,6 +16,7 @@ import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BusinessService {
     private final BusinessRepository businessRepository;
+
     private static String grpcUrl;
     private static int grpcPort;
 
