@@ -2,6 +2,7 @@ package etf.unsa.ba.nwt.emajstor.communication.service;
 
 import etf.unsa.ba.nwt.emajstor.communication.dto.User;
 import etf.unsa.ba.nwt.emajstor.communication.model.Email;
+import etf.unsa.ba.nwt.emajstor.communication.model.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -21,13 +22,14 @@ import java.util.Map;
 @Service
 @Slf4j
 public class EmailService {
-    private final JavaMailSender emailSender;
+    private JavaMailSender emailSender;
     private final SpringTemplateEngine templateEngine;
 
     public EmailService(JavaMailSender emailSender, SpringTemplateEngine templateEngine) {
         this.emailSender = emailSender;
         this.templateEngine = templateEngine;
     }
+
 
     public void sendHtmlMessage(Email email) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
@@ -49,9 +51,9 @@ public class EmailService {
         message.setTo(email.getTo());
         message.setSubject(email.getSubject());
         message.setText(email.getText());
-
         emailSender.send(message);
     }
+
 
     public void sendNotification(final User sender, final User receiver) throws MessagingException {
         Email email = new Email();

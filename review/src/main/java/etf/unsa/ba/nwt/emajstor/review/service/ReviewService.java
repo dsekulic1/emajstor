@@ -1,6 +1,10 @@
 package etf.unsa.ba.nwt.emajstor.review.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.protobuf.Timestamp;
+import etf.unsa.ba.nwt.emajstor.review.dto.Email;
+import etf.unsa.ba.nwt.emajstor.review.dto.Message;
+import etf.unsa.ba.nwt.emajstor.review.dto.ReviewInfo;
 import etf.unsa.ba.nwt.emajstor.review.dto.User;
 import etf.unsa.ba.nwt.emajstor.review.event.EventRequest;
 import etf.unsa.ba.nwt.emajstor.review.event.EventResponse;
@@ -8,19 +12,26 @@ import etf.unsa.ba.nwt.emajstor.review.event.EventServiceGrpc;
 import etf.unsa.ba.nwt.emajstor.review.exception.BadRequestException;
 import etf.unsa.ba.nwt.emajstor.review.exception.NotFoundException;
 import etf.unsa.ba.nwt.emajstor.review.model.Review;
+import etf.unsa.ba.nwt.emajstor.review.rabbitmq.RabbitMQSender;
 import etf.unsa.ba.nwt.emajstor.review.repositories.ReviewRepository;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.naming.ServiceUnavailableException;
+import javax.transaction.Transactional;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,12 +40,15 @@ import java.util.UUID;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final RestTemplate restTemplate;
+    private final RabbitMQSender rabbitMQSender;
+
     private static String grpcUrl;
     private static int grpcPort;
 
-    public ReviewService(ReviewRepository reviewRepository, RestTemplate restTemplate) {
+    public ReviewService(ReviewRepository reviewRepository, RestTemplate restTemplate, RabbitMQSender rabbitMQSender) {
         this.reviewRepository = reviewRepository;
         this.restTemplate = restTemplate;
+        this.rabbitMQSender = rabbitMQSender;
     }
 
     @Value("${app.grpc-url}")
@@ -84,10 +98,35 @@ public class ReviewService {
             try {
                 User user = getUser(review.getUser());
                 User worker = getUser(review.getWorker());
+                Review savedReview = reviewRepository.save(review);
+                ///api/v1/email/send/simple
+                JSONObject body = new JSONObject();
+                body.put("to", worker.getContactInfo().getEmail());
+                body.put("from", "slanjeobavijesti@gmail.com");
+                body.put("subject", "Novi review");
+                String text = "Poštovani "+ worker.getContactInfo().getFirstName() +",\n\n" +"Novi review je: "+review.getComment()+" i ocjena je: "+review.getNumStars()+".\n\nVaš eMjstor team";
+                body.put("text", text);
+
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                HttpEntity<String> entity = new HttpEntity<>(body.toString(), headers);
+                restTemplate.postForObject(
+                        "http://communication/api/v1/email/send/simple",
+                        entity,
+                        Email.class
+                );
+
+                try {
+                    rabbitMQSender.send(new ReviewInfo(user, worker, savedReview));
+                } catch (JsonProcessingException exception) {
+                    registerEvent(EventRequest.actionType.CREATE, "/api/review", "500");
+                    reviewRepository.deleteById(savedReview.getId());
+                    throw exception;
+                }
 
                 registerEvent(EventRequest.actionType.CREATE, "/api/review", "200");
-                return reviewRepository.save(review);
-
+                return savedReview;
             } catch (Exception exception) {
                 registerEvent(EventRequest.actionType.CREATE, "/api/review", "404");
                 throw new NotFoundException("User does not exist.");
@@ -149,4 +188,5 @@ public class ReviewService {
 
         channel.shutdown();
     }
+
 }

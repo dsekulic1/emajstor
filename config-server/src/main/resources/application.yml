@@ -9,8 +9,8 @@ spring:
       server:
         git:
           uri: https://github.com/dsekulic1/config-repo.git
-          username: ## populate from secret
-          password: ## populate from secret
+          username: ## from secret
+          password: ## from secret
           skip-ssl-validation: true
           ignore-local-ssh-settings: true
           clone-on-start: true

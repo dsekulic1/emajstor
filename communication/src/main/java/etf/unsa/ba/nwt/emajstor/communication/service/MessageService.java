@@ -76,7 +76,7 @@ public class MessageService {
            notificationHistory.setTimeStamp(LocalDateTime.now());
            User sender = getUser(message.getSender());
            User receiver = getUser(message.getReceiver());
-           emailService.sendNotification(sender, receiver);
+           //emailService.sendNotification(sender, receiver);
            notificationHistoryRepository.save(notificationHistory);
            registerEvent(EventRequest.actionType.CREATE, "/api/messages", "200");
            return newMessage;
