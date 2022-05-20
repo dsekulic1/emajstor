@@ -16,14 +16,6 @@ const useStyles = makeStyles({
   },
 })
 
-const originalRows = [
-  { name: 'Pizza', calories: 200, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: 'Hot Dog', calories: 300, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: 'Burger', calories: 400, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: 'Hamburger', calories: 500, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: 'Fries', calories: 600, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: 'Ice Cream', calories: 700, fat: 6.0, carbs: 24, protein: 4.0 },
-]
 
 export default function UserPage() {
   const [rows, setRows] = useState([])
@@ -85,7 +77,7 @@ export default function UserPage() {
                   <TableCell align='right'>{row.priceType}</TableCell>
                   <TableCell align='right'>{row.userName}</TableCell>
                   <TableCell align='right'>
-                    <a href={row.gallery.imageUrl}>{row.gallery.imageUrl}</a>
+                    <a href={row?.gallery?.imageUrl}>{row?.gallery?.imageUrl}</a>
                   </TableCell>
                 </TableRow>
               ))}
@@ -93,13 +85,6 @@ export default function UserPage() {
           </Table>
         </TableContainer>
       </Paper>
-      <br />
-      <a
-        target='_blank'
-        href='https://smartdevpreneur.com/the-easiest-way-to-implement-material-ui-table-search/'
-      >
-        Learn how to add search and filter to Material-UI Table here.
-      </a>
     </>
   )
 }

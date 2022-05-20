@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import GuestRoute from 'routing/GuestRoute'
-
+import Users from 'pages/Users'
 import LandingPage from 'pages/LandingPage'
 import Login from 'pages/Login'
 import Register from 'pages/Register'
@@ -16,6 +16,7 @@ const MyRoutes = () => {
       <GuestRoute path='/login' component={Login} />
       <GuestRoute path='/register' component={Register} />
       <PrivateRoute path='/userpage' component={UserPage} />
+      <PrivateRoute path='/users' component={Users} />
       <Route component={PageNotFound} />
     </Switch>
   )

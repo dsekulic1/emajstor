@@ -14,7 +14,7 @@ import { useUserContext } from 'AppContext'
 function DrawerComponent() {
   const [openDrawer, setOpenDrawer] = useState(false)
   const { loggedIn } = useUserContext()
-  const { setLoggedIn } = useUserContext()
+  const { setLoggedIn, role} = useUserContext()
   const handleLogout = () => {
     setLoggedIn(false)
     removeSession()
@@ -28,6 +28,20 @@ function DrawerComponent() {
               <Link to='/'>Home</Link>
             </ListItemText>
           </ListItem>
+          {role === 'ROLE_ADMIN' && (
+            <ListItem onClick={() => setOpenDrawer(false)}>
+            <ListItemText>
+              <Link to='/users'>Users</Link>
+            </ListItemText>
+          </ListItem>              
+              )}
+              {role === 'ROLE_ADMIN' && (
+            <ListItem onClick={() => setOpenDrawer(false)}>
+            <ListItemText>
+              <Link to='/support'>Support</Link>
+            </ListItemText>
+          </ListItem>              
+              )}
           {loggedIn && (
             <ListItem onClick={() => setOpenDrawer(false)}>
               <ListItemText>

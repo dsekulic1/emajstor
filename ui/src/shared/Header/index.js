@@ -45,7 +45,7 @@ function Navbar() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const { loggedIn } = useUserContext()
-  const { setLoggedIn } = useUserContext()
+  const { setLoggedIn, role } = useUserContext()
   const handleLogout = () => {
     setLoggedIn(false)
     removeSession()
@@ -66,6 +66,18 @@ function Navbar() {
               <Link to='/' className={classes.link}>
                 Home
               </Link>
+              {role === 'ROLE_ADMIN' && (
+                <>
+                <Link to='/users' className={classes.link}>
+                Users
+              </Link>
+              <Link to='/support' className={classes.link}>
+                Support
+              </Link>
+                </>
+                
+              )}
+
 
               {!loggedIn ? (
                 <Link to='/login' className={classes.link}>

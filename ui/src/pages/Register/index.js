@@ -39,7 +39,7 @@ const theme = createTheme()
 
 export default function Register() {
   const history = useHistory()
-  const { setLoggedIn } = useUserContext()
+  const { setLoggedIn, setRole } = useUserContext()
   const [lat, setLat] = useState(null)
   const [lng, setLng] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -56,6 +56,7 @@ export default function Register() {
       message.success('Successfully registered')
       setLoading(false)
       setSession(response)
+      setRole(response.roles[0])
       history.goBack()
       setLoggedIn(true)
     } catch (error) {

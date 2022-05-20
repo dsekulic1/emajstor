@@ -1,4 +1,4 @@
-import { getToken } from 'utilities/localStorage'
+import { getToken, getUser } from 'utilities/localStorage'
 import { decode } from 'jsonwebtoken'
 
 export const validToken = () => {
@@ -6,6 +6,14 @@ export const validToken = () => {
   if (token === null) return false
   const exp = decode(token, { complete: true }).payload.exp
   return Date.now() < exp * 1000
+}
+
+export const userRole = () => {
+  const user = getUser()
+
+  if (user != null) return user.roles[0]
+
+  return ''
 }
 
 export const getRandom = (arr, n) => {

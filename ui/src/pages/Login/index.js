@@ -46,7 +46,7 @@ const theme = createTheme()
 
 export default function SignIn() {
   const history = useHistory()
-  const { setLoggedIn } = useUserContext()
+  const { setLoggedIn, setRole } = useUserContext()
   const rememberInfo = getRememberInfo()
   const [loading, setLoading] = useState(false)
   const [isTrue, setIsTrue] = React.useState(false)
@@ -54,11 +54,10 @@ export default function SignIn() {
   const onFinish = async (values) => {
     try {
       setLoading(true)
-      const authObject = {
-        'Private-Key': '4aef04e4-0db4-42c3-8584-2543d8894f46',
-      }
+      
 
       const response = await login(values)
+      setRole(response.roles[0])
       message.success('Successfully logged in')
       setLoading(false)
       setSession(response)
