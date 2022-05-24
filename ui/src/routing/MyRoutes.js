@@ -7,7 +7,9 @@ import Login from 'pages/Login'
 import Register from 'pages/Register'
 import PageNotFound from 'pages/PageNotFound'
 import PrivateRoute from './PrivateRoute'
-import UserPage from 'pages/UserPage/UserPage'
+import UserPage from 'pages/UserPage'
+import ChatBoxes from 'pages/Support'
+import Gallery from 'pages/Gallery'
 
 const MyRoutes = () => {
   return (
@@ -17,6 +19,8 @@ const MyRoutes = () => {
       <GuestRoute path='/register' component={Register} />
       <PrivateRoute path='/userpage' component={UserPage} />
       <PrivateRoute path='/users' component={Users} />
+      <PrivateRoute path='/support' component={ChatBoxes} />
+      <PrivateRoute path='/gallery' component={Gallery} />
       <Route component={PageNotFound} />
     </Switch>
   )

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class ChatMessageService {
@@ -50,6 +51,10 @@ public class ChatMessageService {
         }
     }
 
+    public List<ChatMessage> getMessageByReceiverUsername(final String username) {
+        return chatMessageRepository.findAllByReceiverUsername(username);
+    }
+
     private void registerEvent(EventRequest.actionType actionType, String resource, String status) {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(grpcUrl, grpcPort)
                 .usePlaintext()
@@ -75,6 +80,7 @@ public class ChatMessageService {
 
         channel.shutdown();
     }
+
 
 
 }

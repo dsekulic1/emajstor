@@ -30,22 +30,27 @@ public class ChatMessage {
     private String senderUsername;
 
     @Column(nullable = false)
-    private int chatId;
+    private String senderLocation;
+
+    @Column(nullable = false)
+    private String receiverUsername;
 
     public ChatMessage() {
     }
 
-    public ChatMessage(String text, String senderUsername, int chatId) {
+    public ChatMessage(String text, String senderUsername, String senderLocation, String receiverUsername) {
         this.text = text;
         this.senderUsername = senderUsername;
-        this.chatId = chatId;
+        this.senderLocation = senderLocation;
+        this.receiverUsername = receiverUsername;
     }
 
-    public ChatMessage(UUID id, String text, String senderUsername, int chatId) {
+    public ChatMessage(UUID id, String text, String senderUsername, String senderLocation, String receiverUsername) {
         this.id = id;
         this.text = text;
         this.senderUsername = senderUsername;
-        this.chatId = chatId;
+        this.senderLocation = senderLocation;
+        this.receiverUsername = receiverUsername;
     }
 
     public UUID getId() {
@@ -72,11 +77,19 @@ public class ChatMessage {
         this.senderUsername = senderUsername;
     }
 
-    public int getChatId() {
-        return chatId;
+    public String getSenderLocation() {
+        return senderLocation;
     }
 
-    public void setChatId(int chatId) {
-        this.chatId = chatId;
+    public void setSenderLocation(String senderLocation) {
+        this.senderLocation = senderLocation;
+    }
+
+    public String getReceiverUsername() {
+        return receiverUsername;
+    }
+
+    public void setReceiverUsername(String receiverUsername) {
+        this.receiverUsername = receiverUsername;
     }
 }

@@ -16,8 +16,7 @@ const useStyles = makeStyles({
   },
 })
 
-
-export default function UserPage() {
+export default function UserPage1() {
   const [rows, setRows] = useState([])
   const [jobs, setJobs] = useState([])
   const [searched, setSearched] = useState('')
@@ -77,7 +76,9 @@ export default function UserPage() {
                   <TableCell align='right'>{row.priceType}</TableCell>
                   <TableCell align='right'>{row.userName}</TableCell>
                   <TableCell align='right'>
-                    <a href={row?.gallery?.imageUrl}>{row?.gallery?.imageUrl}</a>
+                    <a href={row?.gallery?.imageUrl}>
+                      {row?.gallery?.imageUrl}
+                    </a>
                   </TableCell>
                 </TableRow>
               ))}
