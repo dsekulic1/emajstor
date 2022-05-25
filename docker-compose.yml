@@ -1,0 +1,157 @@
+version: '1'
+
+services:
+  rabbitmq:
+     image: rabbitmq:latest
+     container_name: rabbitmq
+     ports:
+        - "15672:15672"
+     expose:
+        - "5672"
+     networks:
+        - emajstor
+
+
+  config-server:
+    image: 'config-server:latest'
+    container_name: config-server
+    build:
+      context: ./config-server
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_REPO_USERNAME=dsekulic1
+      - CONFIG_REPO_PASSWORD=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
+      - CONFIG_REPO_URI=https://github.com/dsekulic1/config-repo-elmir.git
+      
+  eureka:
+    image: 'eureka:latest'
+    container_name: eureka
+    build:
+      context: ./eureka
+    networks:
+      - emajstor
+    depends_on:
+      - rabbitmq
+
+
+  system-events:
+    image: 'system-events:latest'
+    container_name: system-events
+    build:
+      context: ./system-events
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=optional:configserver:http://config-server:8888
+    depends_on:
+      - config-server
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  communication:
+    image: 'communication:latest'
+    container_name: communication
+    build:
+      context: ./communication
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=optional:configserver:http://config-server:8888
+    depends_on:
+      - system-events
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5        
+        
+  job:
+    image: 'job:latest'
+    container_name: job
+    build:
+      context: ./job
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=optional:configserver:http://config-server:8888
+    depends_on:
+      - system-events
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5  
+        
+  review:
+    image: 'review:latest'
+    container_name: review
+    build:
+      context: ./review
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=optional:configserver:http://config-server:8888
+    depends_on:
+      - system-events
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5  
+ 
+  user:
+    image: 'user:latest'
+    container_name: user
+    build:
+      context: ./user
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=optional:configserver:http://config-server:8888
+    depends_on:
+      - system-events
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5  
+        
+  api-gateway:
+    image: 'api-gateway:latest'
+    container_name: api-gateway
+    build:
+      context: ./api-gateway
+    networks:
+      - emajstor
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+    depends_on:
+      - tournament-service
+    ports:
+      - "8086:8086"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  react:
+    image: 'frontend:latest'
+    container_name: frontend
+    build:
+      context: ./ui
+    ports:
+      - "3000:3000"
+    networks:
+      - emajstor
+    environment:
+      - REACT_APP_HOST_URL=http://localhost:8086
+    depends_on:
+      - api-gateway
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5        
+
+             
+networks:
+  emajstor:
+    driver: bridge

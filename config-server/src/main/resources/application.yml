@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/dsekulic1/config-repo.git
+          uri: https://github.com/dsekulic1/config-repo-elmir.git
           username: dsekulic1@etf.unsa.ba
           password: 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
           skip-ssl-validation: true
