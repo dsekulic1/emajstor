@@ -7,7 +7,10 @@ import Login from 'pages/Login'
 import Register from 'pages/Register'
 import PageNotFound from 'pages/PageNotFound'
 import PrivateRoute from './PrivateRoute'
-import UserPage from 'pages/UserPage/UserPage'
+import UserPage from 'pages/UserPage'
+import ChatBoxes from 'pages/Support'
+import Gallery from 'pages/Gallery'
+import UserPage1 from 'pages/UserPage/UserPage'
 
 const MyRoutes = () => {
   return (
@@ -15,8 +18,10 @@ const MyRoutes = () => {
       <Route exact path='/' component={LandingPage} />
       <GuestRoute path='/login' component={Login} />
       <GuestRoute path='/register' component={Register} />
-      <PrivateRoute path='/userpage' component={UserPage} />
+      <PrivateRoute path='/userpage' component={UserPage1} />
       <PrivateRoute path='/users' component={Users} />
+      <PrivateRoute path='/support' component={ChatBoxes} />
+      <PrivateRoute path='/gallery' component={Gallery} />
       <Route component={PageNotFound} />
     </Switch>
   )

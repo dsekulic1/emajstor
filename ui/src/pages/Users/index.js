@@ -42,8 +42,6 @@ const useStyles = makeStyles({
     p: 4,
   };
   
-
-
 export default function Users() {
   const [temprow, setTemprow] = useState()
   const [rows, setRows] = useState([])

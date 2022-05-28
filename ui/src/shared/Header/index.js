@@ -68,16 +68,17 @@ function Navbar() {
               </Link>
               {role === 'ROLE_ADMIN' && (
                 <>
-                <Link to='/users' className={classes.link}>
-                Users
-              </Link>
-              <Link to='/support' className={classes.link}>
-                Support
-              </Link>
+                  <Link to='/users' className={classes.link}>
+                    Users
+                  </Link>
+                  <Link to='/support' className={classes.link}>
+                    Support
+                  </Link>
+                  <Link to='/gallery' className={classes.link}>
+                    Gallery
+                  </Link>
                 </>
-                
               )}
-
 
               {!loggedIn ? (
                 <Link to='/login' className={classes.link}>
