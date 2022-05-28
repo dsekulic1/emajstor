@@ -19,7 +19,7 @@ export const basicPut = async (url, data) => {
   return (await axios.put(hostUrl + url, data, getAuthConfig())).data
 }
 
-const getAuthConfig = () => {
+export const getAuthConfig = () => {
   let config = {}
   const token = getToken()
   if (token) {
