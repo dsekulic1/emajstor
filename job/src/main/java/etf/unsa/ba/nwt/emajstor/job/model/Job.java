@@ -40,30 +40,28 @@ public class Job {
     @JoinColumn(name = "business_id", referencedColumnName = "id")
     private Business business;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "gallery_id", referencedColumnName = "id")
-    private Gallery gallery;
+//    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "gallery_id", referencedColumnName = "id")
+//    private Gallery gallery;
 
     public Job() {
     }
 
-    public Job(UUID id, UUID user, String userName, double price, PriceType priceType, Business business, Gallery gallery) {
+    public Job(UUID id, UUID user, String userName, double price, PriceType priceType, Business business) {
         this.id = id;
         this.user = user;
         this.userName = userName;
         this.price = price;
         this.priceType = priceType;
         this.business = business;
-        this.gallery = gallery;
     }
 
-    public Job(UUID user, String userName, double price, PriceType priceType, Business business, Gallery gallery) {
+    public Job(UUID user, String userName, double price, PriceType priceType, Business business) {
         this.user = user;
         this.userName = userName;
         this.price = price;
         this.priceType = priceType;
         this.business = business;
-        this.gallery = gallery;
     }
 
     public UUID getId() {
@@ -106,13 +104,13 @@ public class Job {
         this.business = business;
     }
 
-    public Gallery getGallery() {
-        return gallery;
-    }
-
-    public void setGallery(Gallery gallery) {
-        this.gallery = gallery;
-    }
+//    public Gallery getGallery() {
+//        return gallery;
+//    }
+//
+//    public void setGallery(Gallery gallery) {
+//        this.gallery = gallery;
+//    }
 
     public String getUserName() {
         return userName;

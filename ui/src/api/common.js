@@ -2,6 +2,7 @@ import axios from 'axios'
 import { getToken } from 'utilities/localStorage'
 
 export const hostUrl = 'http://localhost:8086'
+export const hostUrlJob = 'http://localhost:8082'
 
 export const basicGet = async (url) => {
   return (await axios.get(hostUrl + url, getAuthConfig())).data
@@ -13,6 +14,14 @@ export const basicDelete = async (url) => {
 
 export const basicPost = async (url, data) => {
   return (await axios.post(hostUrl + url, data, getAuthConfig())).data
+}
+
+export const basicPostGallery = async (url, data) => {
+  return (await axios.post(hostUrlJob + url, data, getAuthConfig())).data
+}
+
+export const basicGetGallery = async (url) => {
+  return (await axios.get(hostUrlJob + url, getAuthConfig())).data
 }
 
 export const basicPut = async (url, data) => {

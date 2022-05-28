@@ -74,8 +74,9 @@ function Navbar() {
                   <Link to='/support' className={classes.link}>
                     Support
                   </Link>
-                  <Link to='/gallery' className={classes.link}>
-                    Gallery
+
+                  <Link to='/addgallery' className={classes.link}>
+                    Add Gallery
                   </Link>
                 </>
               )}

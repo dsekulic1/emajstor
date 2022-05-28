@@ -16,20 +16,18 @@ public class Gallery {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(nullable = false)
-    @NotBlank
-    private String imageUrl;
+    @ManyToOne
+    @JoinColumn(name = "file_entity_id")
+    private FileEntity fileEntity;
 
-    public Gallery() {
+    private UUID jobId;
+
+    public FileEntity getFileEntity() {
+        return fileEntity;
     }
 
-    public Gallery(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public Gallery(UUID id, String imageUrl) {
-        this.id = id;
-        this.imageUrl = imageUrl;
+    public void setFileEntity(FileEntity fileEntity) {
+        this.fileEntity = fileEntity;
     }
 
     public UUID getId() {
@@ -40,11 +38,19 @@ public class Gallery {
         this.id = id;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public UUID getJobId() {
+        return jobId;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setJobId(UUID jobId) {
+        this.jobId = jobId;
+    }
+
+    public Gallery() {
+    }
+
+    public Gallery(FileEntity fileEntity, UUID jobId) {
+        this.fileEntity = fileEntity;
+        this.jobId = jobId;
     }
 }

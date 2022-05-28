@@ -7,7 +7,6 @@ export const useUserContext = () => useContext(UserContext)
 
 export const AppProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(validToken())
-
   const [role, setRole] = useState(userRole())
 
   return (

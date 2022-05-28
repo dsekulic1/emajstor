@@ -62,7 +62,7 @@ public class JobControllerTest {
 
     private Gallery createGallery(String imageUrl) {
         Gallery gallery = new Gallery();
-        gallery.setImageUrl(imageUrl);
+        //gallery.setImageUrl(imageUrl);
         gallery = galleryRepository.save(gallery);
         return gallery;
     }
@@ -80,7 +80,7 @@ public class JobControllerTest {
         job.setPrice(price);
         job.setPriceType(priceType);
         job.setBusiness(business);
-        job.setGallery(gallery);
+      //  job.setGallery(gallery);
         job = jobRepository.save(job);
         return job;
     }

@@ -21,6 +21,12 @@ public class Deal {
     @Type(type = "uuid-char")
     private UUID user;
 
+    private String name;
+
+    private String email;
+
+    private String number;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "job_id", referencedColumnName = "id", nullable = false)
     private Job job;
@@ -34,19 +40,38 @@ public class Deal {
     public Deal() {
     }
 
-    public Deal(UUID user, Job job, LocalDateTime dateCreated, Boolean finished) {
+    public Deal(UUID user, String name, String email, String number, Job job, LocalDateTime dateCreated, Boolean finished) {
         this.user = user;
+        this.name = name;
+        this.email = email;
+        this.number = number;
         this.job = job;
         this.dateCreated = dateCreated;
         this.finished = finished;
     }
 
-    public Deal(UUID id, UUID user, Job job, LocalDateTime dateCreated, Boolean finished) {
-        this.id = id;
-        this.user = user;
-        this.job = job;
-        this.dateCreated = dateCreated;
-        this.finished = finished;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public UUID getId() {
