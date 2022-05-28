@@ -9,7 +9,6 @@ import PageNotFound from 'pages/PageNotFound'
 import PrivateRoute from './PrivateRoute'
 import UserPage from 'pages/UserPage'
 import ChatBoxes from 'pages/Support'
-import UserPage1 from 'pages/UserPage/UserPage'
 import AddGallery from 'pages/Gallery/AddGallery'
 
 const MyRoutes = () => {

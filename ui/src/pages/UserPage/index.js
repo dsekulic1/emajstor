@@ -281,7 +281,7 @@ export default function UserPage() {
                   rows={rows}
                   columns={columns}
                   pageSize={5}
-                  rowsPerPageOptions={[15]}
+                  rowsPerPageOptions={[20]}
                   disableSelectionOnClick
                 />
               </div>

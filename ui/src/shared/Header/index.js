@@ -74,9 +74,21 @@ function Navbar() {
                   <Link to='/support' className={classes.link}>
                     Support
                   </Link>
+                </>
+              )}
 
+              {role === 'ROLE_WORKER' && (
+                <>
                   <Link to='/addgallery' className={classes.link}>
                     Add Gallery
+                  </Link>
+                </>
+              )}
+
+              {role === 'ROLE_USER' && (
+                <>
+                  <Link to='/userpage' className={classes.link}>
+                    Jobs
                   </Link>
                 </>
               )}
@@ -87,9 +99,6 @@ function Navbar() {
                 </Link>
               ) : (
                 <>
-                  <Link to='/userpage' className={classes.link}>
-                    Jobs
-                  </Link>
                   <Link to='/' onClick={handleLogout} className={classes.link}>
                     Signout
                   </Link>
