@@ -56,8 +56,9 @@ export default function Users() {
     async function fetchData() {
       try {
         const response = await getAllUsers()
-        setUsers(response)
-        setRows(response)
+        const data = response.filter((row) => row.role !== 'ROLE_ADMIN')
+        setUsers(data)
+        setRows(data)
       } catch (e) {
         console.error(e)
       }

@@ -86,8 +86,8 @@ function Navbar() {
 
                   {role === 'ROLE_WORKER' && (
                     <>
-                      <Link to='/addgallery' className={classes.link}>
-                        Add Gallery
+                      <Link to='/workerpage' className={classes.link}>
+                        My jobs
                       </Link>
                     </>
                   )}

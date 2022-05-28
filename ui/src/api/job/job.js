@@ -30,3 +30,7 @@ export const addGallery = async (data) => {
 export const addDeal = async (data) => {
   return await basicPost('/job/api/deal', data)
 }
+
+export const getAllDeals = async () => {
+  return await basicGet('/job/api/deal/all')
+}

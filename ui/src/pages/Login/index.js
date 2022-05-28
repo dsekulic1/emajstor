@@ -54,7 +54,6 @@ export default function SignIn() {
   const onFinish = async (values) => {
     try {
       setLoading(true)
-      
 
       const response = await login(values)
       setRole(response.roles[0])
@@ -62,7 +61,7 @@ export default function SignIn() {
       setLoading(false)
       setSession(response)
       if (isTrue) {
-        setRememberInfo(values.username, values.password)
+        // setRememberInfo(values.username, values.password)
       } else {
         removeRememberInfo()
       }
@@ -106,11 +105,6 @@ export default function SignIn() {
           <Box
             component='form'
             onSubmit={handleSubmit}
-            initialValues={{
-              username: rememberInfo?.username,
-              password: rememberInfo?.password,
-              remember: true,
-            }}
             noValidate
             sx={{ mt: 1 }}
           >

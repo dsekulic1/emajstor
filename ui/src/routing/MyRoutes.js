@@ -9,7 +9,7 @@ import PageNotFound from 'pages/PageNotFound'
 import PrivateRoute from './PrivateRoute'
 import UserPage from 'pages/UserPage'
 import ChatBoxes from 'pages/Support'
-import AddGallery from 'pages/Gallery/AddGallery'
+import WorkerPage from 'pages/Worker'
 
 const MyRoutes = () => {
   return (
@@ -20,7 +20,7 @@ const MyRoutes = () => {
       <PrivateRoute path='/userpage' component={UserPage} />
       <PrivateRoute path='/users' component={Users} />
       <PrivateRoute path='/support' component={ChatBoxes} />
-      <PrivateRoute path='/addgallery' component={AddGallery} />
+      <PrivateRoute path='/workerpage' component={WorkerPage} />
       <Route component={PageNotFound} />
     </Switch>
   )
