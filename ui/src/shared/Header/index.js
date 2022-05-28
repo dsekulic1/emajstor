@@ -66,32 +66,6 @@ function Navbar() {
               <Link to='/' className={classes.link}>
                 Home
               </Link>
-              {role === 'ROLE_ADMIN' && (
-                <>
-                  <Link to='/users' className={classes.link}>
-                    Users
-                  </Link>
-                  <Link to='/support' className={classes.link}>
-                    Support
-                  </Link>
-                </>
-              )}
-
-              {role === 'ROLE_WORKER' && (
-                <>
-                  <Link to='/addgallery' className={classes.link}>
-                    Add Gallery
-                  </Link>
-                </>
-              )}
-
-              {role === 'ROLE_USER' && (
-                <>
-                  <Link to='/userpage' className={classes.link}>
-                    Jobs
-                  </Link>
-                </>
-              )}
 
               {!loggedIn ? (
                 <Link to='/login' className={classes.link}>
@@ -99,6 +73,32 @@ function Navbar() {
                 </Link>
               ) : (
                 <>
+                  {role === 'ROLE_ADMIN' && (
+                    <>
+                      <Link to='/users' className={classes.link}>
+                        Users
+                      </Link>
+                      <Link to='/support' className={classes.link}>
+                        Support
+                      </Link>
+                    </>
+                  )}
+
+                  {role === 'ROLE_WORKER' && (
+                    <>
+                      <Link to='/addgallery' className={classes.link}>
+                        Add Gallery
+                      </Link>
+                    </>
+                  )}
+
+                  {role === 'ROLE_USER' && (
+                    <>
+                      <Link to='/userpage' className={classes.link}>
+                        Jobs
+                      </Link>
+                    </>
+                  )}
                   <Link to='/' onClick={handleLogout} className={classes.link}>
                     Signout
                   </Link>
