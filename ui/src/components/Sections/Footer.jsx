@@ -15,7 +15,7 @@ export default function Contact() {
         <div className='container'>
           <InnerWrapper
             className='flexSpaceCenter'
-            style={{ padding: '30px 0' }}
+            style={{ padding: '5px 0' }}
           >
             <Link
               className='flexCenter animate pointer'
@@ -25,20 +25,11 @@ export default function Contact() {
             >
               <LogoImg />
             </Link>
-            <StyleP className='whiteColor font13'>
+            <StyleP className='whiteColor font14'>
               © {getCurrentYear()} -{' '}
-              <span className='purpleColor font13'>eMajstor</span> All Right
+              <span className='purpleColor font14'>eMajstor</span> All Right
               Reserved
             </StyleP>
-
-            <Link
-              className='whiteColor animate pointer font13'
-              to='home'
-              smooth={true}
-              offset={-80}
-            >
-              Back to top
-            </Link>
           </InnerWrapper>
         </div>
       </div>

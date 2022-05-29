@@ -60,6 +60,15 @@ public class BusinessService {
         }
     }
 
+    public Business addOrGetBusiness(String business) {
+        Optional<Business> optionalBusiness = businessRepository.findByName(business);
+        if (optionalBusiness.isPresent()) {
+            return optionalBusiness.get();
+        }
+        Business business1 = new Business(business);
+        return businessRepository.save(business1);
+    }
+
     public Business getBusinessByName(String name) {
         Optional<Business> optionalBusiness = businessRepository.findByName(name);
         if (optionalBusiness.isPresent()) {

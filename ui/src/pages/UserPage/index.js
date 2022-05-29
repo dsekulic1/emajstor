@@ -19,6 +19,10 @@ import TextField from '@mui/material/TextField'
 import CssBaseline from '@mui/material/CssBaseline'
 import { getUser } from '../../utilities/localStorage'
 import { addReview } from 'api/review/review'
+import List from '@mui/material/List'
+import Divider from '@mui/material/Divider'
+import { getAllDeals } from 'api/job/job'
+import DealCard from './DealCard'
 
 function getBusinessName(params) {
   return `${params.row.business.name || ''}`
@@ -77,20 +81,20 @@ export default function UserPage() {
     {
       field: 'name',
       headerName: 'Bussines',
-      width: 150,
+      width: 125,
       sortable: true,
       valueGetter: getBusinessName,
     },
-    { field: 'price', width: 150, headerName: 'Price', sortable: true },
+    { field: 'price', width: 100, headerName: 'Price', sortable: true },
     {
       field: 'priceType',
       headerName: 'Price Type',
-      width: 150,
+      width: 100,
 
       sortable: true,
       valueGetter: getPriceType,
     },
-    { field: 'userName', headerName: 'Worker', width: 150, sortable: true },
+    { field: 'userName', headerName: 'Worker', width: 125, sortable: true },
     {
       field: 'gallery',
       headerName: 'Gallery',
@@ -104,7 +108,7 @@ export default function UserPage() {
         </Button>
       ),
       sortable: false,
-      width: 200,
+      width: 180,
       valueGetter: (params) =>
         `${params.row.price || ''} ${params.row.userName || ''}`,
     },
@@ -122,7 +126,7 @@ export default function UserPage() {
       ),
 
       sortable: false,
-      width: 200,
+      width: 180,
     },
     {
       field: 'job',
@@ -138,7 +142,7 @@ export default function UserPage() {
       ),
 
       sortable: false,
-      width: 200,
+      width: 180,
     },
   ]
   const [rows, setRows] = useState([])
@@ -153,6 +157,8 @@ export default function UserPage() {
   const classes = useStyles()
   const [selectedRow, setSelectedRow] = useState()
   const [textReview, setTextReview] = useState('')
+  const [deals, setDeals] = useState([])
+
   const user = getUser()
 
   const handleOpenReview = (row) => {
@@ -181,7 +187,8 @@ export default function UserPage() {
       job: row,
       finished: false,
     }
-    await addDeal(values)
+    const value = await addDeal(values)
+    setDeals((deal) => [...deal, value])
   }
 
   const handlePrevious = () => {
@@ -206,7 +213,6 @@ export default function UserPage() {
 
   async function fetchData(jobId) {
     try {
-      console.log(jobId)
       const response = await getAllGallery()
       const imgs = response.filter((data) => data.jobId === jobId)
       setImages(imgs)
@@ -227,12 +233,23 @@ export default function UserPage() {
     setTextReview(event.target.value)
   }
 
+  const filter = (id) => {
+    const newDeals = deals.filter((deal) => deal.id !== id)
+    setDeals(newDeals)
+  }
+
   useEffect(() => {
     async function fetchData() {
       try {
+        const user = getUser()
         const response = await getAllJobs()
         setJobs(response)
         setRows(response)
+        const resArr = await getAllDeals()
+        const newRess = resArr.filter(
+          (row) => row.user === user.id && row.finished !== true
+        )
+        setDeals(newRess)
       } catch (e) {
         console.error(e)
       }
@@ -258,15 +275,16 @@ export default function UserPage() {
         <Grid item container xs={12} spacing={1}>
           <Grid item xs={2}>
             <Paper className={`${classes.paperLeft} ${classes.paper}`}>
-              xs=12 sm=6
+              <h1>User profile</h1>
             </Paper>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={8}>
             <Paper className={`${classes.paperMain} ${classes.paper}`}>
               <SearchBar
                 value={searched}
                 onChange={(searchVal) => requestSearch(searchVal)}
                 onCancelSearch={() => cancelSearch()}
+                style={{ marginBottom: '10px' }}
               />
               <div
                 style={{
@@ -274,7 +292,7 @@ export default function UserPage() {
                   height: '95%',
                   width: '100%',
                   fontSize: '20px',
-                  paddingBottom: '4px',
+                  paddingBottom: '15px',
                 }}
               >
                 <DataGrid
@@ -477,6 +495,33 @@ export default function UserPage() {
                   </Container>
                 </div>
               </Modal>
+            </Paper>
+          </Grid>
+          <Grid item xs={2}>
+            <Paper className={`${classes.paperLeft} ${classes.paper}`}>
+              <h2 style={{ marginBottom: '10px' }}>Jobs</h2>
+
+              <List
+                sx={{
+                  padding: '2px',
+                  width: '100%',
+                  maxWidth: 360,
+                  bgcolor: 'background.paper',
+                  position: 'relative',
+                  overflow: 'auto',
+                  maxHeight: '95vh',
+                  '& ul': { padding: 0 },
+                }}
+                subheader={<li />}
+              >
+                {deals.map((deal) => (
+                  <>
+                    <Divider variant='inset' component='li' />
+                    <DealCard key={deal.id} deal={deal} filter={filter} />
+                    <Divider variant='inset' component='li' />
+                  </>
+                ))}
+              </List>
             </Paper>
           </Grid>
         </Grid>

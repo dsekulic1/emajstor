@@ -61,7 +61,7 @@ export default function SignIn() {
       setLoading(false)
       setSession(response)
       if (isTrue) {
-        // setRememberInfo(values.username, values.password)
+        setRememberInfo(values.username, values.password)
       } else {
         removeRememberInfo()
       }

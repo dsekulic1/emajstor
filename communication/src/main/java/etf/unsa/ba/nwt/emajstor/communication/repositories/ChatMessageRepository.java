@@ -10,6 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, UUID> {
-    List<ChatMessage> findAllByReceiverUsername(String username);
+    List<ChatMessage> findAllBySenderUsername(String username);
 
 }

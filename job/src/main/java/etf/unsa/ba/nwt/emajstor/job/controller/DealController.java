@@ -50,6 +50,11 @@ public class DealController {
         return ResponseEntity.ok(dealService.getDealById(id));
     }
 
+    @PostMapping("/resolve/{id}")
+    public boolean resolveDeal(@PathVariable UUID id) {
+        return dealService.resolveDeal(id);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Deal> updateDealById(@PathVariable UUID id, @RequestBody @Valid Deal deal) throws ServiceUnavailableException {
         return ResponseEntity.ok(dealService.updateDealById(deal, id));

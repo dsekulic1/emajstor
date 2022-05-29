@@ -25,9 +25,20 @@ public class ChatMessageController {
         this.chatMessageService = chatMessageService;
     }
 
+    @GetMapping(path = "/all")
+    public ResponseEntity<List<ChatMessage>> getAllMessages() {
+        return ResponseEntity.ok(chatMessageService.getAllChatMessages());
+    }
+
+
     @PostMapping
     public ResponseEntity<ChatMessage> addMessage(@RequestBody @Valid ChatMessage chatMessage) {
         return ResponseEntity.ok(chatMessageService.addChatMessage(chatMessage));
+    }
+
+    @PostMapping(path = "/{id}/{response}")
+    public ResponseEntity<ChatMessage> addResponse(@PathVariable UUID id, @PathVariable String response) {
+        return ResponseEntity.ok(chatMessageService.addResponse(id, response));
     }
 
     @GetMapping(path = "/{username}")

@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ChatMessageService {
@@ -51,8 +53,22 @@ public class ChatMessageService {
         }
     }
 
+    public ChatMessage addResponse(final UUID id, final String response) {
+        Optional<ChatMessage> optionalChatMessage = chatMessageRepository.findById(id);
+        if (optionalChatMessage.isPresent()) {
+            ChatMessage chatMessage = optionalChatMessage.get();
+            chatMessage.setResponse(response);
+           return chatMessageRepository.save(chatMessage);
+        }
+        return new ChatMessage();
+    }
+
     public List<ChatMessage> getMessageByReceiverUsername(final String username) {
-        return chatMessageRepository.findAllByReceiverUsername(username);
+        return chatMessageRepository.findAllBySenderUsername(username);
+    }
+
+    public  List<ChatMessage> getAllChatMessages() {
+        return chatMessageRepository.findAll();
     }
 
     private void registerEvent(EventRequest.actionType actionType, String resource, String status) {

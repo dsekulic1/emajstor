@@ -15,7 +15,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import Alert from '@mui/material/Alert'
 import { makeStyles } from '@material-ui/core/styles'
 import { getUser } from '../../utilities/localStorage'
-import { addGallery, addImages } from 'api/job/job'
+import { addGallery, addImages, getOrAddBusiness, addJob } from 'api/job/job'
 import { message } from 'antd'
 import ReviewCard from './ReviewCard'
 import List from '@mui/material/List'
@@ -26,6 +26,7 @@ import JobCard from './JobCard'
 import Stack from '@mui/material/Stack'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import Chart from './Chart'
+import TextField from '@mui/material/TextField'
 
 function getBusinessName(params) {
   return `${params.row.business.name || ''}`
@@ -36,6 +37,17 @@ function getPriceType(params) {
   else if (params.row.priceType === 'PER_DAY') return 'Per day'
   return `${params.row.business.name || ''}`
 }
+
+const currencies = [
+  {
+    value: 'PER_DAY',
+    label: 'Per day',
+  },
+  {
+    value: 'PER_HOUR',
+    label: 'Per hour',
+  },
+]
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -122,13 +134,70 @@ export default function WorkerPage() {
   const [jobs, setJobs] = useState([])
   const [searched, setSearched] = useState('')
   const [open, setOpen] = useState(false)
+  const [openAddJob, setOpenAddJob] = useState(false)
   const [images, setImages] = useState([])
   const [currentImg, setCurrentImg] = useState()
   const [position, setPosition] = useState(0)
   const [reviews, setReviews] = useState([])
   const [deals, setDeals] = useState([])
-
   const classes = useStyles()
+  const [selectedPriceType, setSelectedPriceType] = useState('PER_HOUR')
+  const [price, setPrice] = useState()
+  const [business, setBusiness] = useState()
+  const user = getUser()
+
+  const handleClickAddJob = async (e) => {
+    e.preventDefault()
+    const response = await getBusiness(business)
+    const values = {
+      user: user.id,
+      userName: user.username,
+      price: price,
+      priceType: selectedPriceType,
+      business: response,
+    }
+    const res = await addJob(values)
+    const resp = await getAllJobs()
+    const data = resp.filter((row) => row.user === user.id)
+    setJobs(data)
+    setRows(data)
+    handleCloseAddNewJob()
+  }
+
+  const handleCloseAddNewJob = () => {
+    setOpenAddJob(false)
+  }
+
+  const handleOpenAddNewJob = () => {
+    setOpenAddJob(true)
+  }
+
+  const getBusiness = async (name) => {
+    const response = await getOrAddBusiness(name)
+    return response
+  }
+
+  const handleChangePrice = (event) => {
+    event.preventDefault()
+
+    setPrice(event.target.value)
+  }
+
+  const handleChangeBusiness = (event) => {
+    event.preventDefault()
+
+    setBusiness(event.target.value)
+  }
+
+  const handleChangePriceType = (event) => {
+    event.preventDefault()
+    setSelectedPriceType(event.target.value)
+  }
+
+  const filter = (id) => {
+    const newDeals = deals.filter((deal) => deal.id !== id)
+    setDeals(newDeals)
+  }
 
   const onFileChangeHandler = async (e, row) => {
     e.preventDefault()
@@ -195,7 +264,9 @@ export default function WorkerPage() {
         const arr = res.filter((row) => row.worker === user.id)
         setReviews(arr)
         const resArr = await getAllDeals()
-        const newRess = resArr.filter((row) => row.job.user === user.id)
+        const newRess = resArr.filter(
+          (row) => row.job.user === user.id && row.finished !== true
+        )
         setDeals(newRess)
       } catch (e) {
         console.error(e)
@@ -222,11 +293,11 @@ export default function WorkerPage() {
         <Grid item container xs={12} spacing={1}>
           <Grid item xs={2}>
             <Paper className={`${classes.paperLeft} ${classes.paper}`}>
-              <h3 style={{ marginBottom: '10px' }}>Reviews</h3>
+              <h2 style={{ marginBottom: '10px' }}>Reviews</h2>
 
               <List
                 sx={{
-                  padding: '2px',
+                  padding: '6px',
                   width: '100%',
                   maxWidth: 360,
                   bgcolor: 'background.paper',
@@ -265,6 +336,7 @@ export default function WorkerPage() {
                   onCancelSearch={() => cancelSearch()}
                 />
                 <Button
+                  onClick={handleOpenAddNewJob}
                   variant='outlined'
                   style={{
                     width: '20%',
@@ -288,10 +360,10 @@ export default function WorkerPage() {
                   rows={rows}
                   columns={columns}
                   pageSize={5}
-                  rowsPerPageOptions={[20]}
+                  rowsPerPageOptions={[5]}
                   disableSelectionOnClick
                 />
-                <Chart />
+                <Chart reviews={reviews} />
               </div>
               <Modal
                 style={{
@@ -373,6 +445,108 @@ export default function WorkerPage() {
                   </Box>
                 </Container>
               </Modal>
+
+              <Modal
+                style={{
+                  marginTop: '60px',
+                }}
+                open={openAddJob}
+                onClose={handleCloseAddNewJob}
+                aria-labelledby='modal-modal-title'
+                aria-describedby='modal-modal-description'
+                disableEscapeKeyDown
+                disableEnforceFocus
+              >
+                <Container component='main' maxWidth='sm'>
+                  <Box
+                    component='form'
+                    sx={{
+                      borderRadius: '5px',
+                      backgroundColor: '#FFFAFA',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      padding: '20px',
+                    }}
+                    noValidate
+                    autoComplete='off'
+                  >
+                    <div style={{ margin: '10px' }}>
+                      <TextField
+                        id='outlined-select-currency'
+                        input
+                        label='Input business name'
+                        value={business}
+                        onChange={handleChangeBusiness}
+                      ></TextField>
+                    </div>
+                    <div style={{ margin: '10px' }}>
+                      <TextField
+                        id='outlined-select-currency'
+                        input
+                        label='Input price'
+                        value={price}
+                        onChange={handleChangePrice}
+                      ></TextField>
+                    </div>
+                    <div style={{ margin: '10px' }}>
+                      <TextField
+                        id='filled-select-currency-native'
+                        select
+                        label='Select price type'
+                        value={selectedPriceType}
+                        onChange={handleChangePriceType}
+                        SelectProps={{
+                          native: true,
+                        }}
+                        helperText='Please select your type'
+                        variant='filled'
+                      >
+                        {currencies.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </TextField>
+                    </div>
+                    <ButtonGroup
+                      style={{
+                        width: '50%',
+                        displey: 'flex',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Button
+                        onClick={handleCloseAddNewJob}
+                        variant='contained'
+                        style={{
+                          backgroundColor: 'red',
+                          width: '48%',
+                          color: '#ffff',
+                          borderRadius: '10',
+                        }}
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                        Close
+                      </Button>
+
+                      <Button
+                        onClick={(event) => handleClickAddJob(event)}
+                        variant='contained'
+                        style={{
+                          backgroundColor: 'green',
+                          width: '48%',
+                          color: '#ffff',
+                          borderRadius: '10',
+                        }}
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                        Submit
+                      </Button>
+                    </ButtonGroup>
+                  </Box>
+                </Container>
+              </Modal>
             </Paper>
           </Grid>
           <Grid item xs={2}>
@@ -395,7 +569,7 @@ export default function WorkerPage() {
                 {deals.map((deal) => (
                   <>
                     <Divider variant='inset' component='li' />
-                    <JobCard key={deal.id} deal={deal} />
+                    <JobCard key={deal.id} deal={deal} filter={filter} />
                     <Divider variant='inset' component='li' />
                   </>
                 ))}

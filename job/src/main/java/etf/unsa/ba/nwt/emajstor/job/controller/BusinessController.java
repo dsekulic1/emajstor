@@ -39,6 +39,11 @@ public class BusinessController {
         return ResponseEntity.ok(businessService.addBusiness(business));
     }
 
+    @PostMapping("/{business}")
+    public ResponseEntity<Business> addOrGetBusiness(@PathVariable String business) {
+        return ResponseEntity.ok(businessService.addOrGetBusiness(business));
+    }
+
     @GetMapping(path = "/all")
     public ResponseEntity<List<Business>> getAllPersons() {
         return ResponseEntity.ok(businessService.getAllBusiness());

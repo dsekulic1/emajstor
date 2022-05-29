@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import { useUserContext } from 'AppContext'
 // Components
 import FullButton from '../Buttons/FullButton'
 // Assets
@@ -9,6 +9,8 @@ import QuotesIcon from '../../assets/svg/Quotes'
 import Dots from '../../assets/svg/Dots'
 
 export default function Header() {
+  const { loggedIn } = useUserContext()
+
   return (
     <Wrapper id='home' className='container flexSpaceCenter'>
       <LeftSide className='flexCenter'>
@@ -18,10 +20,12 @@ export default function Header() {
             Find your craftman with us.
           </HeaderP>
           <BtnWrapper>
-            <FullButton
-              title='Get Started'
-              onClick={(event) => (window.location.href = '/login')}
-            />
+            {!loggedIn && (
+              <FullButton
+                title='Get Started'
+                onClick={(event) => (window.location.href = '/login')}
+              />
+            )}
           </BtnWrapper>
         </div>
       </LeftSide>

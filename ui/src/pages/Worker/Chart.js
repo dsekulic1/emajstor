@@ -1,28 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { VictoryChart } from 'victory'
 import { VictoryBar } from 'victory'
+import Box from '@material-ui/core/Box'
+import CircularProgress from '@mui/material/CircularProgress'
 
-export default function Chart() {
-  const data = [
-    { numstars: 1, count: 100 },
-    { numstars: 2, count: 200 },
-    { numstars: 3, count: 111 },
-    { numstars: 4, count: 333 },
-    { numstars: 5, count: 123 },
-  ]
+export default function Chart({ reviews }) {
+  const [reviewStats, setReviewStats] = useState([])
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    const getCount = (array, value) => {
+      const newArray = array.filter((x) => x.numStars === value)
+      return newArray.length
+    }
+    const data = []
+    for (var i = 1; i < 6; i++) {
+      const value = getCount(reviews, i)
+      data.push({
+        numstars: i,
+        count: value,
+      })
+    }
+    setReviewStats(data)
+    setLoading(false)
+  }, [reviews])
+
   return (
-    <g>
-      <h3 style={{ marginTop: '5px' }}>Review Statistics</h3>
-
-      <VictoryChart domainPadding={20}>
-        <VictoryBar
-          data={data}
-          // data accessor for x values
-          x='numstars'
-          // data accessor for y values
-          y='count'
-        />
-      </VictoryChart>
-    </g>
+    <Box style={{ height: '95%', marginTop: '5px' }}>
+      <h3>Review Statistics</h3>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <VictoryChart domainPadding={20}>
+          <VictoryBar
+            data={reviewStats}
+            // data accessor for x values
+            x='numstars'
+            // data accessor for y values
+            y='count'
+          />
+        </VictoryChart>
+      )}
+    </Box>
   )
 }

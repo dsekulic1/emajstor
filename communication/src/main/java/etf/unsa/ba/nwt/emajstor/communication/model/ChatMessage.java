@@ -32,25 +32,16 @@ public class ChatMessage {
     @Column(nullable = false)
     private String senderLocation;
 
-    @Column(nullable = false)
-    private String receiverUsername;
+    private String response;
 
     public ChatMessage() {
     }
 
-    public ChatMessage(String text, String senderUsername, String senderLocation, String receiverUsername) {
+    public ChatMessage(String text, String senderUsername, String senderLocation, String response) {
         this.text = text;
         this.senderUsername = senderUsername;
         this.senderLocation = senderLocation;
-        this.receiverUsername = receiverUsername;
-    }
-
-    public ChatMessage(UUID id, String text, String senderUsername, String senderLocation, String receiverUsername) {
-        this.id = id;
-        this.text = text;
-        this.senderUsername = senderUsername;
-        this.senderLocation = senderLocation;
-        this.receiverUsername = receiverUsername;
+        this.response = response;
     }
 
     public UUID getId() {
@@ -85,11 +76,11 @@ public class ChatMessage {
         this.senderLocation = senderLocation;
     }
 
-    public String getReceiverUsername() {
-        return receiverUsername;
+    public String getResponse() {
+        return response;
     }
 
-    public void setReceiverUsername(String receiverUsername) {
-        this.receiverUsername = receiverUsername;
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

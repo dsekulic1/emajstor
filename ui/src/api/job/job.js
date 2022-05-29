@@ -11,6 +11,10 @@ export const getAllJobs = async () => {
   return await basicGet(jobApi + '/all')
 }
 
+export const addJob = async (data) => {
+  return await basicPost(jobApi, data)
+}
+
 export const getAllGallery = async () => {
   return await basicGetGallery('/api/gallery/all')
 }
@@ -33,4 +37,12 @@ export const addDeal = async (data) => {
 
 export const getAllDeals = async () => {
   return await basicGet('/job/api/deal/all')
+}
+
+export const getOrAddBusiness = async (name) => {
+  return await basicPost('/job/api/business/' + name)
+}
+
+export const resolveDeal = async (id) => {
+  return await basicPost('/job/api/deal/resolve/' + id)
 }

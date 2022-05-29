@@ -98,6 +98,12 @@ public class DealService {
         }
     }
 
+    public boolean resolveDeal(final UUID id) {
+        Deal deal = getDealById(id);
+        deal.setFinished(true);
+        return dealRepository.save(deal).getFinished();
+    }
+
     public User getUser(final UUID id) throws ServiceUnavailableException {
         try {
             return restTemplate.getForObject(

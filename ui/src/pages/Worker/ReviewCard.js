@@ -2,15 +2,20 @@ import React from 'react'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
-import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import Rating from '@mui/material/Rating'
+import Avatar from 'avataaars'
+import { generateRandomAvatarOptions } from './Avatars'
 
 export default function ReviewCard({ value, text }) {
   return (
     <ListItem alignItems='flex-start'>
       <ListItemAvatar>
-        <Avatar alt='Travis Howard' src='/static/images/avatar/2.jpg' />
+        <Avatar
+          style={{ width: '40px', height: '40px' }}
+          avatarStyle='Circle'
+          {...generateRandomAvatarOptions()}
+        />
       </ListItemAvatar>
       <ListItemText
         primary={
