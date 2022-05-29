@@ -305,7 +305,7 @@ export default function UserPage() {
               </div>
               <Modal
                 style={{
-                  marginTop: '150px',
+                  marginTop: '40px',
                 }}
                 open={open}
                 onClose={handleClose}
@@ -386,7 +386,7 @@ export default function UserPage() {
 
               <Modal
                 style={{
-                  marginTop: '150px',
+                  marginTop: '40px',
                 }}
                 open={openReview}
                 onClose={handleCloseReview}

@@ -153,7 +153,7 @@ export default function Users() {
       <div>
         <Modal
           style={{
-            marginTop: '150px',
+            marginTop: '40px',
           }}
           open={open}
           onClose={handleClose}
