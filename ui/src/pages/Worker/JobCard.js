@@ -41,7 +41,7 @@ export default function JobCard({ deal, filter }) {
           }}
           sx={{ mt: 3, mb: 2 }}
         >
-          Mark resolved
+          Mark finished
         </Button>
       </Box>
     </ListItem>

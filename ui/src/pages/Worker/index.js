@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
-import { getAllJobs } from 'api/job/job'
+import { getAllJobs, getAllUserFoto } from 'api/job/job'
 import { getAllGallery } from 'api/job/job'
 import Paper from '@material-ui/core/Paper'
 import SearchBar from 'material-ui-search-bar'
@@ -144,6 +144,7 @@ export default function WorkerPage() {
   const [selectedPriceType, setSelectedPriceType] = useState('PER_HOUR')
   const [price, setPrice] = useState()
   const [business, setBusiness] = useState()
+  const [imgs, setImgs] = useState([])
   const user = getUser()
 
   const handleClickAddJob = async (e) => {
@@ -156,7 +157,7 @@ export default function WorkerPage() {
       priceType: selectedPriceType,
       business: response,
     }
-    const res = await addJob(values)
+    await addJob(values)
     const resp = await getAllJobs()
     const data = resp.filter((row) => row.user === user.id)
     setJobs(data)
@@ -255,10 +256,8 @@ export default function WorkerPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const user = getUser()
         const response = await getAllJobs()
         const data = response.filter((row) => row.user === user.id)
-        console.log(user)
         setJobs(data)
         setRows(data)
         const res = await getAllReviews()
@@ -269,6 +268,9 @@ export default function WorkerPage() {
           (row) => row.job.user === user.id && row.finished !== true
         )
         setDeals(newRess)
+        const imgsResp = await getAllUserFoto()
+        console.log(imgsResp)
+        setImgs(imgsResp)
       } catch (e) {
         console.error(e)
       }
@@ -316,6 +318,7 @@ export default function WorkerPage() {
                       key={review.id}
                       value={review.numStars}
                       text={review.comment}
+                      userId={review.user}
                     />
                     <Divider variant='inset' component='li' />
                   </>

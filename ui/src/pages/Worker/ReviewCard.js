@@ -1,20 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Typography from '@mui/material/Typography'
 import Rating from '@mui/material/Rating'
-import Avatar from 'avataaars'
-import { generateRandomAvatarOptions } from './Avatars'
+import Avatar from '@mui/material/Avatar'
+import { getUserFoto } from 'api/job/job'
 
-export default function ReviewCard({ value, text }) {
+export default function ReviewCard({ value, text, userId }) {
+  const [userImg, setUserImg] = useState()
+  useEffect(async () => {
+    try {
+      const userFoto = await getUserFoto(userId)
+      setUserImg(userFoto?.fileEntity?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
   return (
     <ListItem alignItems='flex-start'>
       <ListItemAvatar>
         <Avatar
-          style={{ width: '40px', height: '40px' }}
+          //  style={{ width: '40px', height: '40px' }}
           avatarStyle='Circle'
-          {...generateRandomAvatarOptions()}
+          src={userImg && `data:image/jpeg;base64,${userImg}`}
         />
       </ListItemAvatar>
       <ListItemText

@@ -46,3 +46,19 @@ export const getOrAddBusiness = async (name) => {
 export const resolveDeal = async (id) => {
   return await basicPost('/job/api/deal/resolve/' + id)
 }
+
+export const addUserImages = async (data) => {
+  return await basicPostGallery('/api/userfoto/upload', data)
+}
+
+export const addUserFoto = async (data) => {
+  return await basicPostGallery('/api/userfoto', data)
+}
+
+export const getUserFoto = async (id) => {
+  return await basicGetGallery('/api/userfoto/' + id)
+}
+
+export const getAllUserFoto = async (id) => {
+  return await basicGetGallery('/api/userfoto/all')
+}
