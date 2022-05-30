@@ -258,6 +258,7 @@ export default function WorkerPage() {
         const user = getUser()
         const response = await getAllJobs()
         const data = response.filter((row) => row.user === user.id)
+        console.log(user)
         setJobs(data)
         setRows(data)
         const res = await getAllReviews()

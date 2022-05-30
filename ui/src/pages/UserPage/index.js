@@ -3,6 +3,11 @@ import { DataGrid } from '@mui/x-data-grid'
 import { addDeal, getAllJobs } from 'api/job/job'
 import { getAllGallery } from 'api/job/job'
 import Paper from '@material-ui/core/Paper'
+import { styled } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import SearchBar from 'material-ui-search-bar'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
@@ -23,6 +28,10 @@ import List from '@mui/material/List'
 import Divider from '@mui/material/Divider'
 import { getAllDeals } from 'api/job/job'
 import DealCard from './DealCard'
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import Stack from "@mui/material/Stack";
+import Badge from "@mui/material/Badge";
 
 function getBusinessName(params) {
   return `${params.row.business.name || ''}`
@@ -61,6 +70,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+const avatarStyle = makeStyles({
+  avatar: {
+    margin: 10,
+  },
+  bigAvatar: {
+    margin: 10,
+    width: 200,
+    height: 200,
+  },
+});
+
 const inputStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -76,6 +96,11 @@ const labels = {
   5: 'Excellent+',
 }
 
+const Input = styled('input')({
+  display: 'none',
+});
+
+const theme = createTheme()
 export default function UserPage() {
   const columns = [
     {
@@ -158,8 +183,15 @@ export default function UserPage() {
   const [selectedRow, setSelectedRow] = useState()
   const [textReview, setTextReview] = useState('')
   const [deals, setDeals] = useState([])
-
+  const klase = useStyles();
   const user = getUser()
+  const [userProfile, setProfile] = useState(user)
+  const [file, setFile] = useState();
+
+  function handleChange(e) {
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+}
 
   const handleOpenReview = (row) => {
     setSelectedRow(row)
@@ -238,10 +270,25 @@ export default function UserPage() {
     setDeals(newDeals)
   }
 
+  const onFileChangeHandler = async (e) => {
+    e.preventDefault()
+    const formData = new FormData()
+    
+    formData.append('file', e.target.files[0])
+    setFile(URL.createObjectURL(e.target.files[0]));
+    console.log(formData)
+    // const response = await addImages(formData)
+    // await addGallery(gallery)
+    // message.success('Successfully added image!')
+    // const firstNameInput = document.getElementById(row.id)
+    // firstNameInput.value = ''
+  }
+
   useEffect(() => {
     async function fetchData() {
       try {
         const user = getUser()
+        console.log(user)
         const response = await getAllJobs()
         setJobs(response)
         setRows(response)
@@ -276,6 +323,127 @@ export default function UserPage() {
           <Grid item xs={2}>
             <Paper className={`${classes.paperLeft} ${classes.paper}`}>
               <h1>User profile</h1>
+              <ThemeProvider theme={theme}>
+      <Container component='main' maxWidth='xs'>
+        <CssBaseline /> 
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+              <Stack direction="row" spacing={2}>
+      <Badge
+        overlap="circular"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        badgeContent={
+          <Button
+            variant="contained"
+            component="label"
+            backgroundColor = "#21b6ae"
+            style={{maxWidth: '50px', maxHeight: '50px', minWidth: '40px', minHeight: '40px'}}
+          >
+            <PhotoCamera />
+            {/* <input
+              type="file"
+              hidden
+              onChange={handleChange}
+            /> */}
+              <input
+              type='file'
+              hidden
+              className='form-control'
+              name='file'
+              onChange={(event) => onFileChangeHandler(event)}
+            />
+          </Button>
+        }
+      >
+        <Avatar
+          alt="Travis Howard"
+          // src={`data:image/jpeg;base64,${currentImg}`}
+          src={file}
+          sx={{ width: 200, height: 200 }}
+        />
+      </Badge>
+    </Stack>
+          <Box
+            component='form'
+            noValidate
+            //onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <div className="App"  style={{
+                alignItems: 'center'}}>
+            </div>
+              </Grid> 
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  value={user.firstName}
+                  fullWidth
+                  id='firstName'
+                  label='First Name'
+                  name='firstName'
+                  autoComplete
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  value={user.lastName}
+                  fullWidth
+                  id='lastName'
+                  label='Last Name'
+                  name='lastName'
+                  autoComplete
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  value={userProfile.email} 
+                  fullWidth
+                  id='email'
+                  label='Email Address'
+                  name='email'
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                value={userProfile.number} 
+                  fullWidth
+                  id='number'
+                  label='Phone Number'
+                  name='number'
+                  type='tel'
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                value={userProfile.username} 
+                  fullWidth
+                  name='username'
+                  label='Username'
+                  type='username'
+                  id='username'
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  value={userProfile.city} 
+                  fullWidth
+                  name='city'
+                  label='City'
+                  id='city'
+                />
+              </Grid> 
+            </Grid>  
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
             </Paper>
           </Grid>
           <Grid item xs={8}>
