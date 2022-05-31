@@ -9,14 +9,17 @@ import { getUserFoto } from 'api/job/job'
 
 export default function ReviewCard({ value, text, userId }) {
   const [userImg, setUserImg] = useState()
-  useEffect(async () => {
-    try {
-      const userFoto = await getUserFoto(userId)
-      setUserImg(userFoto?.fileEntity?.data)
-    } catch (error) {
-      console.log(error)
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userFoto = await getUserFoto(userId)
+        setUserImg(userFoto?.fileEntity?.data)
+      } catch (error) {
+        console.log(error)
+      }
     }
-  }, [])
+    fetchData()
+  }, [userId])
   return (
     <ListItem alignItems='flex-start'>
       <ListItemAvatar>

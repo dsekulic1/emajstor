@@ -3,7 +3,6 @@ import { DataGrid } from '@mui/x-data-grid'
 import { addDeal, getAllJobs } from 'api/job/job'
 import { getAllGallery } from 'api/job/job'
 import Paper from '@material-ui/core/Paper'
-import { styled } from '@mui/material/styles'
 import Avatar from '@mui/material/Avatar'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import SearchBar from 'material-ui-search-bar'
@@ -30,7 +29,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import Stack from '@mui/material/Stack'
 import Badge from '@mui/material/Badge'
 import { addUserImages } from 'api/job/job'
-import { addUserFoto, getUserFoto, getAllUserFoto } from 'api/job/job'
+import { addUserFoto, getUserFoto } from 'api/job/job'
 
 function getBusinessName(params) {
   return `${params.row.business.name || ''}`
@@ -69,17 +68,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const avatarStyle = makeStyles({
-  avatar: {
-    margin: 10,
-  },
-  bigAvatar: {
-    margin: 10,
-    width: 200,
-    height: 200,
-  },
-})
-
 const inputStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -94,10 +82,6 @@ const labels = {
   4: 'Good+',
   5: 'Excellent+',
 }
-
-const Input = styled('input')({
-  display: 'none',
-})
 
 const theme = createTheme()
 export default function UserPage() {
@@ -182,15 +166,9 @@ export default function UserPage() {
   const [selectedRow, setSelectedRow] = useState()
   const [textReview, setTextReview] = useState('')
   const [deals, setDeals] = useState([])
-  const klase = useStyles()
   const user = getUser()
   const [userProfile, setProfile] = useState(user)
   const [file, setFile] = useState()
-
-  function handleChange(e) {
-    console.log(e.target.files)
-    setFile(URL.createObjectURL(e.target.files[0]))
-  }
 
   const handleOpenReview = (row) => {
     setSelectedRow(row)

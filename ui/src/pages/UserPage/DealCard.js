@@ -29,10 +29,9 @@ export default function DealCard({ deal, filter }) {
             <strong>Job price:</strong>
           </Typography>
           <Typography>
-            {' '}
             {deal.job?.priceType === 'PER_HOUR'
-              ? deal.job.price + ' KM ' + 'per hour'
-              : deal.job.price + ' KM ' + 'per day'}
+              ? deal.job.price + ' KM per hour'
+              : deal.job.price + ' KM per day'}
           </Typography>
         </Box>
         <Button

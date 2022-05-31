@@ -32,10 +32,10 @@ import Stack from '@mui/material/Stack'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import Chart from './Chart'
 import TextField from '@mui/material/TextField'
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+import Tab from '@mui/material/Tab'
+import TabContext from '@mui/lab/TabContext'
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
 import { addUserImages } from 'api/job/job'
 import { addUserFoto, getUserFoto } from 'api/job/job'
 
@@ -158,14 +158,14 @@ export default function WorkerPage() {
   const [price, setPrice] = useState()
   const [business, setBusiness] = useState()
   const [imgs, setImgs] = useState([])
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState('1')
   const [file, setFile] = useState()
   const user = getUser()
   const [userProfile, setProfile] = useState(user)
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
 
   const handleClickAddJob = async (e) => {
     e.preventDefault()
@@ -290,6 +290,7 @@ export default function WorkerPage() {
   useEffect(() => {
     async function fetchData() {
       try {
+        const user = getUser()
         const response = await getAllJobs()
         const data = response.filter((row) => row.user === user.id)
         setJobs(data)
@@ -303,8 +304,9 @@ export default function WorkerPage() {
         )
         setDeals(newRess)
         const imgsResp = await getAllUserFoto()
-        console.log(imgsResp)
         setImgs(imgsResp)
+        const userFoto = await getUserFoto(user.id)
+        setFile(userFoto?.fileEntity?.data)
       } catch (e) {
         console.error(e)
       }
@@ -329,181 +331,180 @@ export default function WorkerPage() {
       <Grid container spacing={1} className={classes.grid}>
         <Grid item container xs={12} spacing={1}>
           <Grid item xs={2}>
-          <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab sx={{ width: '50%'}} label="Reviews" value="1" />
-            <Tab sx={{ width: '50%'}} label="Profile" value="2" />
-          </TabList>
-        </Box>
-        <TabPanel value="1">
-            <Paper  className={`${classes.paperLeft} ${classes.paper}`}>
-              <h2 style={{ marginBottom: '10px' }}>Reviews</h2>
-              <List
-                sx={{
-                  padding: '6px',
-                  width: '100%',
-                  maxWidth: 360,
-                  bgcolor: 'background.paper',
-                  position: 'relative',
-                  overflow: 'auto',
-                  maxHeight: '95vh',
-                  '& ul': { padding: 0 },
-                }}
-                subheader={<li />}
-              >
-                {reviews.map((review) => (
-                  <>
-                    <Divider variant='inset' component='li' />
-                    <ReviewCard
-                      key={review.id}
-                      value={review.numStars}
-                      text={review.comment}
-                    />
-                    <Divider variant='inset' component='li' />
-                  </>
-                ))}
-              </List>
-            </Paper>
-        </TabPanel>
-        <TabPanel value="2">
-        <Paper className={`${classes.paperLeft} ${classes.paper}`}>
-              <h1>User profile</h1>
-              <ThemeProvider theme={theme}>
-                <Container component='main' maxWidth='xs'>
-                  <CssBaseline />
-                  <Box
-                    sx={{
-                      marginTop: 8,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}
+            <Paper className={`${classes.paperLeft} ${classes.paper}`}>
+              <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <TabList
+                    onChange={handleChange}
+                    aria-label='lab API tabs example'
                   >
-                    <Stack direction='row' spacing={2}>
-                      <Badge
-                        overlap='circular'
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'right',
-                        }}
-                        badgeContent={
-                          <Button
-                            variant='contained'
-                            component='label'
-                            backgroundColor='#21b6ae'
-                            style={{
-                              maxWidth: '50px',
-                              maxHeight: '50px',
-                              minWidth: '40px',
-                              minHeight: '40px',
-                            }}
-                          >
-                            <PhotoCamera />
-                            {/* <input
-              type="file"
-              hidden
-              onChange={handleChange}
-            /> */}
-                            <input
-                              type='file'
-                              hidden
-                              className='form-control'
-                              name='file'
-                              onChange={(event) => onFileChangeHandlerProfile(event)}
-                            />
-                          </Button>
-                        }
-                      >
-                        <Avatar
-                          style={{ border: '1px solid' }}
-                          alt='Travis Howard'
-                          src={file && `data:image/jpeg;base64,${file}`}
-                          sx={{ width: 200, height: 200 }}
-                        />
-                      </Badge>
-                    </Stack>
-                    <Box
-                      component='form'
-                      noValidate
-                      //onSubmit={handleSubmit}
-                      sx={{ mt: 3 }}
+                    <Tab sx={{ width: '50%' }} label='Reviews' value='1' />
+                    <Tab sx={{ width: '50%' }} label='Profile' value='2' />
+                  </TabList>
+                </Box>
+                <TabPanel value='1' style={{ padding: 0 }}>
+                  <Paper className={`${classes.paperLeft}`}>
+                    <List
+                      sx={{
+                        padding: '6px',
+                        width: '100%',
+                        maxWidth: 360,
+                        bgcolor: 'background.paper',
+                        position: 'relative',
+                        overflow: 'auto',
+                        maxHeight: '95vh',
+                        '& ul': { padding: 0 },
+                      }}
+                      subheader={<li />}
                     >
-                      <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                          <div
-                            className='App'
-                            style={{
-                              alignItems: 'center',
-                            }}
-                          ></div>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            value={user.firstName}
-                            fullWidth
-                            id='firstName'
-                            label='First Name'
-                            name='firstName'
-                            autoComplete
+                      {reviews.map((review) => (
+                        <>
+                          <Divider variant='inset' component='li' />
+                          <ReviewCard
+                            key={review.id}
+                            value={review.numStars}
+                            text={review.comment}
+                            userId={review.user}
                           />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            value={user.lastName}
-                            fullWidth
-                            id='lastName'
-                            label='Last Name'
-                            name='lastName'
-                            autoComplete
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            value={userProfile.email}
-                            fullWidth
-                            id='email'
-                            label='Email Address'
-                            name='email'
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            value={userProfile.number}
-                            fullWidth
-                            id='number'
-                            label='Phone Number'
-                            name='number'
-                            type='tel'
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            value={userProfile.username}
-                            fullWidth
-                            name='username'
-                            label='Username'
-                            type='username'
-                            id='username'
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            value={userProfile.city}
-                            fullWidth
-                            name='city'
-                            label='City'
-                            id='city'
-                          />
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </Box>
-                </Container>
-              </ThemeProvider>
+                          <Divider variant='inset' component='li' />
+                        </>
+                      ))}
+                    </List>
+                  </Paper>
+                </TabPanel>
+                <TabPanel value='2' style={{ padding: 0 }}>
+                  <Paper className={`${classes.paperLeft} `}>
+                    <ThemeProvider theme={theme}>
+                      <Container component='main' maxWidth='xs'>
+                        <CssBaseline />
+                        <Box
+                          sx={{
+                            marginTop: 8,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Stack direction='row' spacing={2}>
+                            <Badge
+                              overlap='circular'
+                              anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                              }}
+                              badgeContent={
+                                <Button
+                                  variant='contained'
+                                  component='label'
+                                  backgroundColor='#21b6ae'
+                                  style={{
+                                    maxWidth: '50px',
+                                    maxHeight: '50px',
+                                    minWidth: '40px',
+                                    minHeight: '40px',
+                                  }}
+                                >
+                                  <PhotoCamera />
+                                  <input
+                                    type='file'
+                                    hidden
+                                    className='form-control'
+                                    name='file'
+                                    onChange={(event) =>
+                                      onFileChangeHandlerProfile(event)
+                                    }
+                                  />
+                                </Button>
+                              }
+                            >
+                              <Avatar
+                                style={{ border: '1px solid' }}
+                                alt='Travis Howard'
+                                src={file && `data:image/jpeg;base64,${file}`}
+                                sx={{ width: 200, height: 200 }}
+                              />
+                            </Badge>
+                          </Stack>
+                          <Box
+                            component='form'
+                            noValidate
+                            //onSubmit={handleSubmit}
+                            sx={{ mt: 3 }}
+                          >
+                            <Grid container spacing={2}>
+                              <Grid item xs={12}>
+                                <div
+                                  className='App'
+                                  style={{
+                                    alignItems: 'center',
+                                  }}
+                                ></div>
+                              </Grid>
+                              <Grid item xs={12} sm={6}>
+                                <TextField
+                                  value={user.firstName}
+                                  fullWidth
+                                  id='firstName'
+                                  label='First Name'
+                                  name='firstName'
+                                />
+                              </Grid>
+                              <Grid item xs={12} sm={6}>
+                                <TextField
+                                  value={user.lastName}
+                                  fullWidth
+                                  id='lastName'
+                                  label='Last Name'
+                                  name='lastName'
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                <TextField
+                                  value={userProfile.email}
+                                  fullWidth
+                                  id='email'
+                                  label='Email Address'
+                                  name='email'
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                <TextField
+                                  value={userProfile.number}
+                                  fullWidth
+                                  id='number'
+                                  label='Phone Number'
+                                  name='number'
+                                  type='tel'
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                <TextField
+                                  value={userProfile.username}
+                                  fullWidth
+                                  name='username'
+                                  label='Username'
+                                  type='username'
+                                  id='username'
+                                />
+                              </Grid>
+                              <Grid item xs={12}>
+                                <TextField
+                                  value={userProfile.city}
+                                  fullWidth
+                                  name='city'
+                                  label='City'
+                                  id='city'
+                                />
+                              </Grid>
+                            </Grid>
+                          </Box>
+                        </Box>
+                      </Container>
+                    </ThemeProvider>
+                  </Paper>
+                </TabPanel>
+              </TabContext>
             </Paper>
-        </TabPanel>
-      </TabContext>
           </Grid>
           <Grid item xs={8}>
             <Paper className={`${classes.paperMain} ${classes.paper}`}>
@@ -652,7 +653,6 @@ export default function WorkerPage() {
                       padding: '20px',
                     }}
                     noValidate
-                    autoComplete='off'
                   >
                     <div style={{ margin: '10px' }}>
                       <TextField

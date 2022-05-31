@@ -17,12 +17,6 @@ public class UserFotoService {
     }
 
     public UserFoto addUserFoto(UserFoto userFoto) {
-        List<UserFoto> userFotoList = getAllUserFoto();
-        UserFoto userFoto2 = userFotoList.stream().filter(userFoto1 -> userFoto.getUserId().equals(userFoto1.getUserId())).findFirst().get();
-        if (userFoto2!= null){
-            userFoto2.setFileEntity(userFoto.getFileEntity());
-          return userFotoRepository.save(userFoto2);
-        }
         return userFotoRepository.save(userFoto);
     }
 
