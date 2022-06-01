@@ -51,7 +51,7 @@ export default function Gallery({ jobId, open, handleClose }) {
   }, [])
 
   return (
-    <Modal
+    <Modal className="imageModal"
       style={{
         marginTop: '50px',
       }}
@@ -83,7 +83,7 @@ export default function Gallery({ jobId, open, handleClose }) {
               }}
             >
               {images.length === 0 ? (
-                <Alert severity='error'>There is no images for this job!</Alert>
+                <Alert severity='error' >There is no images for this job!</Alert>
               ) : (
                 <Box
                   component='img'

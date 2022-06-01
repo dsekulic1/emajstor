@@ -17,7 +17,7 @@
     "@mui/x-data-grid": "^5.11.1",
     "@pankod/refine-react-hook-form": "^3.22.1",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.1.10",
     "@types/react": "^18.0.8",
     "antd": "^4.15.4",

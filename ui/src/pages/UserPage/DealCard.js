@@ -15,8 +15,8 @@ export default function DealCard({ deal, filter }) {
   }
   return (
     <ListItem key={deal.id} alignItems='center'>
-      <Box style={{ padding: '10px 30px' }}>
-        <Typography component='legend'>
+      <Box className='dealcardBox' style={{ padding: '10px 30px' }}>
+        <Typography className='dealcardBox' component='legend'>
           <strong>Usluga: </strong>
           {deal.job.business.name}
         </Typography>

@@ -68,6 +68,7 @@ export default function ChatBox({
               onChange={handleChange}
             />
             <Button
+             data-test-id="cancel-submit-btn"
               onClick={handleSendResponse}
               variant='contained'
               style={{

@@ -38,6 +38,7 @@ export default function ChatBoxes() {
 
   return (
     <Grid
+      className='messageGrid'
       style={{ marginTop: '35px' }}
       container
       spacing={{ xs: 2, md: 4 }}
