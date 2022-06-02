@@ -14,7 +14,7 @@ export default function JobCard({ deal, filter }) {
     }
   }
   return (
-    <ListItem key={deal.id} alignItems='flex-start'>
+    <ListItem className='workerDeal' key={deal.id} alignItems='flex-start'>
       <Box style={{ padding: '10px' }}>
         <Typography component='legend'>
           <strong>Business: </strong>

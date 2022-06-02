@@ -630,6 +630,7 @@ export default function WorkerPage() {
               </Modal>
 
               <Modal
+              className ='workerNewJob'
                 style={{
                   marginTop: '60px',
                 }}
@@ -656,7 +657,7 @@ export default function WorkerPage() {
                   >
                     <div style={{ margin: '10px' }}>
                       <TextField
-                        id='outlined-select-currency'
+                        id='workerBusinessname'
                         input
                         label='Input business name'
                         value={business}
@@ -665,7 +666,7 @@ export default function WorkerPage() {
                     </div>
                     <div style={{ margin: '10px' }}>
                       <TextField
-                        id='outlined-select-currency'
+                        id='workerPrice'
                         input
                         label='Input price'
                         value={price}
@@ -674,7 +675,7 @@ export default function WorkerPage() {
                     </div>
                     <div style={{ margin: '10px' }}>
                       <TextField
-                        id='filled-select-currency-native'
+                        id='workerPricetype'
                         select
                         label='Select price type'
                         value={selectedPriceType}

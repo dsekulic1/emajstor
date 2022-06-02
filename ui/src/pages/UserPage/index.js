@@ -460,6 +460,7 @@ export default function UserPage() {
           <Grid item xs={8}>
             <Paper className={`${classes.paperMain} ${classes.paper}`}>
               <SearchBar
+                className='userSearchBar'
                 value={searched}
                 onChange={(searchVal) => requestSearch(searchVal)}
                 onCancelSearch={() => cancelSearch()}
@@ -507,6 +508,7 @@ export default function UserPage() {
                   >
                     <Grid item xs={12}>
                       <div
+                        className='userImages'
                         style={{
                           display: 'flex',
                           justifyContent: 'center',
@@ -592,6 +594,7 @@ export default function UserPage() {
                         <Grid container spacing={2}>
                           <Grid item xs={12}></Grid>
                           <div
+                            className='userReview'
                             style={{
                               marginLeft: '30%',
                               width: '100%',
@@ -676,7 +679,7 @@ export default function UserPage() {
               </Modal>
             </Paper>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={2} className='userJobs'>
             <Paper className={`${classes.paperLeft} ${classes.paper}`}>
               <h2 style={{ marginBottom: '10px' }}>Jobs</h2>
 
