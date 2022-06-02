@@ -12,7 +12,6 @@ services:
         - emajstor
 
   psql-ms:
-    -- promejna
     image: 'postgres:latest'
     container_name: psql-ms
     expose:
@@ -23,7 +22,7 @@ services:
       - ./db-entrypoint.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=admin
+      - POSTGRES_PASSWORD=baza123
       
             
   eureka:
@@ -46,10 +45,9 @@ services:
     networks:
       - emajstor
     environment:
-        --promjena
-      - CONFIG_REPO_USERNAME=quizhub
-      - CONFIG_REPO_PASSWORD=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
-      - CONFIG_REPO_URI=https://github.com/quizhub/quizhub-cloud-config-docker
+      - CONFIG_REPO_USERNAME=tjapalak1
+      - CONFIG_REPO_PASSWORD=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
+      - CONFIG_REPO_URI=https://github.com/tjapalak1/config-repo.git
 
 
 
@@ -61,7 +59,8 @@ services:
     networks:
       - emajstor
     environment:
-      - CONFIG_SERVER_URI=http://root:root@config-service:8888
+      - CONFIG_SERVER_URI=http://root:root@config-ms:8888
+      - EUREKA_SERVER=http://eureka:8761/eureka
     depends_on:
       - config-ms
     deploy:
@@ -78,12 +77,10 @@ services:
     networks:
       - emajstor
     environment:
-      - CONFIG_SERVER_URI=http://root:root@config-service:8888
+      - CONFIG_SERVER_URI=http://root:root@config-ms:8888
+      - EUREKA_SERVER=http://eureka:8761/eureka
     depends_on:
       - system-events-service
-      - job-service
-      - review-service
-      - user-service
     deploy:
       restart_policy:
         condition: on-failure
@@ -98,12 +95,10 @@ services:
     networks:
       - emajstor
     environment:
-      - CONFIG_SERVER_URI=http://root:root@config-service:8888
+      - CONFIG_SERVER_URI=http://root:root@config-ms:8888
+      - EUREKA_SERVER=http://eureka:8761/eureka
     depends_on:
-      - system-events-service
       - communication-service
-      - review-service
-      - user-service
     deploy:
       restart_policy:
         condition: on-failure
@@ -118,12 +113,10 @@ services:
     networks:
       - emajstor
     environment:
-      - CONFIG_SERVER_URI=optional:configserver:http://config-ms:8888
+      - CONFIG_SERVER_URI=http://root:root@config-ms:8888
+      - EUREKA_SERVER=http://eureka:8761/eureka
     depends_on:
-      - system-events-service
-      - communication-service
       - job-service
-      - user-service
     deploy:
       restart_policy:
         condition: on-failure
@@ -138,11 +131,9 @@ services:
     networks:
       - emajstor
     environment:
-      - CONFIG_SERVER_URI=optional:configserver:http://config-ms:8888
+      - CONFIG_SERVER_URI=http://root:root@config-ms:8888
+      - EUREKA_SERVER=http://eureka:8761/eureka
     depends_on:
-      - system-events-service
-      - communication-service
-      - job-service
       - review-service
     deploy:
       restart_policy:
@@ -158,12 +149,8 @@ services:
     networks:
       - emajstor
     environment:
-      - EUREKA_SERVER=http://eureka-service:8761/eureka
+      - EUREKA_SERVER=http://eureka:8761/eureka
     depends_on:
-      - system-events-service
-      - communication-service
-      - job-service
-      - review-service
       - user-service
     ports:
       - "8086:8086"
@@ -186,10 +173,6 @@ services:
       - REACT_APP_HOST_URL=http://localhost:8086
     depends_on:
       - api-gateway-service
-      - communication-service
-      - job-service
-      - review-service
-      - user-service
     deploy:
       restart_policy:
         condition: on-failure
