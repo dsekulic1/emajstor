@@ -8,6 +8,7 @@ import etf.unsa.ba.nwt.emajstor.user.request.UpdateRequest;
 import etf.unsa.ba.nwt.emajstor.user.response.LoginResponseBody;
 import etf.unsa.ba.nwt.emajstor.user.security.JwtUtils;
 import etf.unsa.ba.nwt.emajstor.user.service.AuthService;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<LoginResponseBody> signup(@RequestBody @Valid SignupRequest signupRequest) {
+    public ResponseEntity<LoginResponseBody> signup(@RequestBody @Valid SignupRequest signupRequest) throws JSONException {
         User user = userService.signup(signupRequest);
         ArrayList<String> roles = new ArrayList<>();
         roles.add("ROLE_USER");

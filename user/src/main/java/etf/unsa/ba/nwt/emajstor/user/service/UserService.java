@@ -1,6 +1,7 @@
 package etf.unsa.ba.nwt.emajstor.user.service;
 
 import com.google.protobuf.Timestamp;
+import etf.unsa.ba.nwt.emajstor.user.dto.Email;
 import etf.unsa.ba.nwt.emajstor.user.event.EventRequest;
 import etf.unsa.ba.nwt.emajstor.user.event.EventResponse;
 import etf.unsa.ba.nwt.emajstor.user.event.EventServiceGrpc;
@@ -14,9 +15,14 @@ import etf.unsa.ba.nwt.emajstor.user.repositories.UserRepository;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
-import lombok.RequiredArgsConstructor;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
 import java.util.List;
@@ -27,6 +33,7 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final ContactInfoRepository contactInfoRepository;
+
     private static String grpcUrl;
     private static int grpcPort;
 
@@ -128,6 +135,8 @@ public class UserService {
 
         return user;
     }
+
+
 
     private void registerEvent(EventRequest.actionType actionType, String resource, String status) {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(grpcUrl, grpcPort)

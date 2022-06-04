@@ -76,8 +76,8 @@
 <body>
 <div class="container">
     <div class="box left-spacer">
-        <div class="header vertical-spacer">Dear {{name}},</div>
-        <div class="text">Thank you for registering for the eMajstor.</div>
+        <div class="header vertical-spacer">Dear <span th:text="${name}"></span>,</div>
+        <div class="text">Thank you for registering.</div>
         <div class="text vertical-spacer">Your registration is now confirmed.!</div>
         <p class="vertical-spacer text smaller-text">eMajstor Team</p>
     </div>

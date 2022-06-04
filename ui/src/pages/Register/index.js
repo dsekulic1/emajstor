@@ -16,6 +16,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { loginUrl, homeUrl } from 'utilities/appUrls'
 import { setSession } from 'utilities/localStorage'
 import { useUserContext } from 'AppContext'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 
 function Copyright(props) {
   return (
@@ -44,6 +46,7 @@ export default function Register() {
   const [lng, setLng] = useState(null)
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState(null)
+  const [isTrue, setIsTrue] = useState(false)
 
   useEffect(() => {
     getLocation()
@@ -79,6 +82,7 @@ export default function Register() {
       lastName: data.get('lastName'),
       email: data.get('email'),
       number: data.get('number'),
+      worker: isTrue,
     }
     onFinish(values)
   }
@@ -193,6 +197,22 @@ export default function Register() {
                   name='city'
                   label='City'
                   id='city'
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value='worker'
+                      valuePropName='checked'
+                      color='primary'
+                      checked={isTrue}
+                      onChange={(e) => {
+                        setIsTrue(e.target.checked)
+                      }}
+                    />
+                  }
+                  label='Worker'
                 />
               </Grid>
             </Grid>

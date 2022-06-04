@@ -1,5 +1,6 @@
 package etf.unsa.ba.nwt.emajstor.communication.service;
 
+import etf.unsa.ba.nwt.emajstor.communication.dto.RegisterDTO;
 import etf.unsa.ba.nwt.emajstor.communication.dto.User;
 import etf.unsa.ba.nwt.emajstor.communication.model.Email;
 import etf.unsa.ba.nwt.emajstor.communication.model.Message;
@@ -63,6 +64,17 @@ public class EmailService {
         Map<String, Object> properties =  new HashMap<>();
         properties.put("name", receiver.getContactInfo().getFullName());
         properties.put("sender", sender.getContactInfo().getFullName());
+        email.setProperties(properties);
+        sendHtmlMessage(email);
+    }
+
+    public void sendRegisterEmail(final RegisterDTO registerDTO) throws MessagingException {
+        Email email = new Email();
+        email.setSubject("Successful registration");
+        email.setTemplate("register-successful");
+        email.setTo(registerDTO.getEmail());
+        Map<String, Object> properties =  new HashMap<>();
+        properties.put("name", registerDTO.getName());
         email.setProperties(properties);
         sendHtmlMessage(email);
     }

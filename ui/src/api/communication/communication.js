@@ -7,3 +7,7 @@ export const getAllChatMessages = async () => {
 export const addResponse = async (id, data) => {
   return await basicPost('/communication/api/chat/message/' + id + '/' + data)
 }
+
+export const addMessage = async (data) => {
+  return await basicPost('/communication/api/chat/message', data)
+}

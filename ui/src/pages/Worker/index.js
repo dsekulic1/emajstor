@@ -21,7 +21,6 @@ import Alert from '@mui/material/Alert'
 import { makeStyles } from '@material-ui/core/styles'
 import { getUser } from '../../utilities/localStorage'
 import { addGallery, addImages, getOrAddBusiness, addJob } from 'api/job/job'
-import { message } from 'antd'
 import ReviewCard from './ReviewCard'
 import List from '@mui/material/List'
 import Divider from '@mui/material/Divider'
@@ -38,6 +37,9 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import { addUserImages } from 'api/job/job'
 import { addUserFoto, getUserFoto } from 'api/job/job'
+import SupportMessage from './SupportMessage'
+import { getAllChatMessages } from 'api/communication/communication'
+import { addMessage } from 'api/communication/communication'
 
 const theme = createTheme()
 
@@ -162,9 +164,33 @@ export default function WorkerPage() {
   const [file, setFile] = useState()
   const user = getUser()
   const [userProfile, setProfile] = useState(user)
+  const [right, setRight] = useState('1')
+  const [chats, setChats] = useState([])
+  const [message, setMessage] = useState()
 
+  const handleChangeMessage = (event) => {
+    event.preventDefault()
+    setMessage(event.target.value)
+  }
   const handleChange = (event, newValue) => {
     setValue(newValue)
+  }
+
+  const handleChangeRight = (event, newValue) => {
+    setRight(newValue)
+  }
+
+  const sendNewMessage = async (e) => {
+    e.preventDefault()
+    const user = getUser()
+    const values = {
+      senderLocation: 'Sarajevo',
+      senderUsername: user.username,
+      text: message,
+    }
+    const response = await addMessage(values)
+    setChats([...chats, response])
+    setMessage('')
   }
 
   const handleClickAddJob = async (e) => {
@@ -307,6 +333,12 @@ export default function WorkerPage() {
         setImgs(imgsResp)
         const userFoto = await getUserFoto(user.id)
         setFile(userFoto?.fileEntity?.data)
+
+        const messages = await getAllChatMessages()
+        const myMessages = messages.filter(
+          (row) => row.senderUsername === user.username
+        )
+        setChats(myMessages)
       } catch (e) {
         console.error(e)
       }
@@ -359,14 +391,14 @@ export default function WorkerPage() {
                     >
                       {reviews.map((review) => (
                         <>
-                          <Divider variant='inset' component='li' />
+                          <Divider component='li' />
                           <ReviewCard
                             key={review.id}
                             value={review.numStars}
                             text={review.comment}
                             userId={review.user}
                           />
-                          <Divider variant='inset' component='li' />
+                          <Divider component='li' />
                         </>
                       ))}
                     </List>
@@ -734,29 +766,92 @@ export default function WorkerPage() {
           </Grid>
           <Grid item xs={2}>
             <Paper className={`${classes.paperLeft} ${classes.paper}`}>
-              <h3 style={{ marginBottom: '10px' }}>Jobs</h3>
-
-              <List
-                sx={{
-                  padding: '2px',
-                  width: '100%',
-                  maxWidth: 360,
-                  bgcolor: 'background.paper',
-                  position: 'relative',
-                  overflow: 'auto',
-                  maxHeight: '95vh',
-                  '& ul': { padding: 0 },
-                }}
-                subheader={<li />}
-              >
-                {deals.map((deal) => (
-                  <>
-                    <Divider variant='inset' component='li' />
-                    <JobCard key={deal.id} deal={deal} filter={filter} />
-                    <Divider variant='inset' component='li' />
-                  </>
-                ))}
-              </List>
+              <TabContext value={right}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <TabList
+                    onChange={handleChangeRight}
+                    aria-label='lab API tabs example'
+                  >
+                    <Tab sx={{ width: '50%' }} label='Jobs' value='1' />
+                    <Tab sx={{ width: '50%' }} label='Support' value='2' />
+                  </TabList>
+                </Box>
+                <TabPanel value='1' style={{ padding: 0 }}>
+                  <Paper className={`${classes.paperLeft}`}>
+                    <List
+                      sx={{
+                        padding: '2px',
+                        width: '100%',
+                        maxWidth: 360,
+                        bgcolor: 'background.paper',
+                        position: 'relative',
+                        overflow: 'auto',
+                        maxHeight: '95vh',
+                        '& ul': { padding: 0 },
+                      }}
+                      subheader={<li />}
+                    >
+                      {deals.map((deal) => (
+                        <>
+                          <Divider component='li' />
+                          <JobCard key={deal.id} deal={deal} filter={filter} />
+                          <Divider component='li' />
+                        </>
+                      ))}
+                    </List>
+                  </Paper>
+                </TabPanel>
+                <TabPanel value='2' style={{ padding: 0 }}>
+                  <Paper className={`${classes.paperLeft} `}>
+                    <Box style={{ marginTop: '10px', marginBottom: '20px' }}>
+                      <TextField
+                        style={{ width: '90%' }}
+                        id='outlined-select-currency'
+                        input
+                        label='Support message'
+                        value={message}
+                        onChange={handleChangeMessage}
+                      />
+                      <Button
+                        onClick={sendNewMessage}
+                        variant='contained'
+                        style={{
+                          marginTop: '15px',
+                          backgroundColor: 'green',
+                          marginLeft: '5px',
+                          width: '90%',
+                          color: '#ffff',
+                          borderRadius: '10',
+                        }}
+                      >
+                        Send New Message
+                      </Button>
+                    </Box>
+                    <h3 style={{ marginBottom: '5px' }}>My messages</h3>
+                    <List
+                      sx={{
+                        padding: '2px',
+                        width: '100%',
+                        maxWidth: 360,
+                        bgcolor: 'background.paper',
+                        position: 'relative',
+                        overflow: 'auto',
+                        maxHeight: '95vh',
+                        '& ul': { padding: 0 },
+                      }}
+                      subheader={<li />}
+                    >
+                      {chats.map((chat) => (
+                        <>
+                          <Divider component='li' />
+                          <SupportMessage chat={chat} />
+                          <Divider component='li' />
+                        </>
+                      ))}
+                    </List>
+                  </Paper>
+                </TabPanel>
+              </TabContext>
             </Paper>
           </Grid>
         </Grid>

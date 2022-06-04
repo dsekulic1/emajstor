@@ -32,6 +32,8 @@ public class SignupRequest {
     @NotBlank(message = "City can't be blank")
     private String city;
 
+    private Boolean worker;
+
     private double locationLongitude;
 
     private double locationLatitude;
@@ -39,7 +41,7 @@ public class SignupRequest {
     public SignupRequest() {
     }
 
-    public SignupRequest(String firstName, String lastName, String email, String number, String username, String password, String city, double locationLongitude, double locationLatitude) {
+    public SignupRequest(String firstName, String lastName, String email, String number, String username, String password, String city, Boolean worker, double locationLongitude, double locationLatitude) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -47,9 +49,12 @@ public class SignupRequest {
         this.username = username;
         this.password = password;
         this.city = city;
+        this.worker = worker;
         this.locationLongitude = locationLongitude;
         this.locationLatitude = locationLatitude;
     }
+
+
 
     public String getFirstName() {
         return firstName;
@@ -105,6 +110,14 @@ public class SignupRequest {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Boolean getWorker() {
+        return worker;
+    }
+
+    public void setWorker(Boolean worker) {
+        this.worker = worker;
     }
 
     public double getLocationLongitude() {
