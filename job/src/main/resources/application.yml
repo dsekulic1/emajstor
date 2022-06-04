@@ -4,8 +4,6 @@ spring:
   profiles:
     active: development
   config:
-    import: 'configserver:'
-  cloud:
-    config:
-      uri: ${CONFIG_SERVER_URI}
+    import: optional:configserver:http://root:root@localhost:8888
+
 

@@ -291,15 +291,24 @@ export default function UserPage() {
       userId: user.id,
     }
     const resp = await addUserFoto(userfoto)
-    setFile(resp?.fileEntity?.data)
+    if (resp.status !== 'error') {
+      setFile(resp?.fileEntity?.data)
+    }
   }
 
   useEffect(() => {
     async function fetchData() {
       try {
         const user = getUser()
-        const userFoto = await getUserFoto(user.id)
-        setFile(userFoto?.fileEntity?.data)
+        try {
+          const userFoto = await getUserFoto(user.id)
+          if (userFoto.status !== 'error') {
+            setFile(userFoto?.fileEntity?.data)
+          }
+        } catch (e) {
+          console.error(e)
+        }
+
         const response = await getAllJobs()
         setJobs(response)
         setRows(response)

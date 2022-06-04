@@ -282,7 +282,9 @@ export default function WorkerPage() {
       userId: user.id,
     }
     const resp = await addUserFoto(userfoto)
-    setFile(resp?.fileEntity?.data)
+    if (resp.status !== 'error') {
+      setFile(resp?.fileEntity?.data)
+    }
   }
 
   const handleNext = () => {
@@ -331,8 +333,14 @@ export default function WorkerPage() {
         setDeals(newRess)
         const imgsResp = await getAllUserFoto()
         setImgs(imgsResp)
-        const userFoto = await getUserFoto(user.id)
-        setFile(userFoto?.fileEntity?.data)
+        try {
+          const userFoto = await getUserFoto(user.id)
+          if (userFoto.status !== 'error') {
+            setFile(userFoto?.fileEntity?.data)
+          }
+        } catch (e) {
+          console.error(e)
+        }
 
         const messages = await getAllChatMessages()
         const myMessages = messages.filter(

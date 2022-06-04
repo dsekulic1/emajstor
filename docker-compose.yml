@@ -22,7 +22,7 @@ services:
       - ./db-entrypoint.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=baza123
+      - POSTGRES_PASSWORD=user1234
       
             
   eureka:
@@ -45,9 +45,9 @@ services:
     networks:
       - emajstor
     environment:
-      - CONFIG_REPO_USERNAME=tjapalak1
-      - CONFIG_REPO_PASSWORD=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
-      - CONFIG_REPO_URI=https://github.com/tjapalak1/config-repo.git
+      - CONFIG_REPO_USERNAME=dsekulic1@etf.unsa.ba
+      - CONFIG_REPO_PASSWORD=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
+      - CONFIG_REPO_URI=https://github.com/dsekulic1/config-repo-docker.git
 
 
 
