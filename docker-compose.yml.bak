@@ -1,0 +1,201 @@
+version: '2'
+
+services:
+  rabbitmq:
+     image: rabbitmq:latest
+     container_name: rabbitmq
+     ports:
+        - "15672:15672"
+     expose:
+        - "5672"
+     networks:
+        - emajstor
+
+  psql-ms:
+    -- promejna
+    image: 'postgres:latest'
+    container_name: psql-ms
+    expose:
+      - "5432"
+    networks:
+        - quiz-hub
+    volumes:
+      - ./db-entrypoint.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      
+            
+  eureka:
+    image: 'eureka:latest'
+    container_name: eureka
+    build:
+      context: ./eureka
+    networks:
+      - emajstor
+    depends_on:
+      - psql-ms
+      - rabbitmq
+
+
+  config-ms:
+    image: 'config-ms:latest'
+    container_name: config-ms
+    build:
+      context: ./config-server
+    networks:
+      - emajstor
+    environment:
+        --promjena
+      - CONFIG_REPO_USERNAME=quizhub
+      - CONFIG_REPO_PASSWORD=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
+      - CONFIG_REPO_URI=https://github.com/quizhub/quizhub-cloud-config-docker
+
+
+
+  system-events-service:
+    image: 'system-events-service:latest'
+    container_name: system-events-service
+    build:
+      context: ./system-events
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=http://root:root@config-service:8888
+    depends_on:
+      - config-ms
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+        
+  communication-service:
+    image: 'communication-service:latest'
+    container_name: communication-service
+    build:
+      context: ./communication
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=http://root:root@config-service:8888
+    depends_on:
+      - system-events-service
+      - job-service
+      - review-service
+      - user-service
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+
+  job-service:
+    image: 'job-service:latest'
+    container_name: job-service
+    build:
+      context: ./job
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=http://root:root@config-service:8888
+    depends_on:
+      - system-events-service
+      - communication-service
+      - review-service
+      - user-service
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+      
+  review-service:
+    image: 'review-service:latest'
+    container_name: review-service
+    build:
+      context: ./review
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=optional:configserver:http://config-ms:8888
+    depends_on:
+      - system-events-service
+      - communication-service
+      - job-service
+      - user-service
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+
+  user-service:
+    image: 'user-service:latest'
+    container_name: user-service
+    build:
+      context: ./user
+    networks:
+      - emajstor
+    environment:
+      - CONFIG_SERVER_URI=optional:configserver:http://config-ms:8888
+    depends_on:
+      - system-events-service
+      - communication-service
+      - job-service
+      - review-service
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+
+  api-gateway-service:
+    image: 'api-gateway-service:latest'
+    container_name: api-gateway-service
+    build:
+      context: ./api-gateway
+    networks:
+      - emajstor
+    environment:
+      - EUREKA_SERVER=http://eureka-service:8761/eureka
+    depends_on:
+      - system-events-service
+      - communication-service
+      - job-service
+      - review-service
+      - user-service
+    ports:
+      - "8086:8086"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+
+  react:
+    image: 'react-c:latest'
+    container_name: react-c
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - emajstor
+    environment:
+      - REACT_APP_HOST_URL=http://localhost:8086
+    depends_on:
+      - api-gateway-service
+      - communication-service
+      - job-service
+      - review-service
+      - user-service
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+
+networks:
+  emajstor:
+    driver: bridge

@@ -1,0 +1,11 @@
+CREATE DATABASE communication_db;
+CREATE DATABASE job_db;
+CREATE DATABASE review_db;
+CREATE DATABASE system_events_db;
+CREATE DATABASE user_db;
+
+GRANT ALL PRIVILEGES ON DATABASE communication_db TO postgres;
+GRANT ALL PRIVILEGES ON DATABASE job_db TO postgres;
+GRANT ALL PRIVILEGES ON DATABASE review_db TO postgres;
+GRANT ALL PRIVILEGES ON DATABASE system_events_db TO postgres;
+GRANT ALL PRIVILEGES ON DATABASE user_db TO postgres;
