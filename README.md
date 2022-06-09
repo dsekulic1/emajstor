@@ -23,7 +23,8 @@ To clone and run this application, you will need [Git](https://git-scm.com), [Ja
 $ git clone https://github.com/dsekulic1/emajstor.git
 
 # Pratiti video uputstva u videu ispod:
-$ LINK VIDEA
+
+https://drive.google.com/file/d/1TCOUQ8nMU4G836z89jvhlWPgtTN7qz71/
 
 ```
 
