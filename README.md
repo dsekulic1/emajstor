@@ -9,7 +9,7 @@ The following is a diagram of the application architecture:
 
 
 ## Demo :movie_camera:
-Check out demo video [here](dodati link).
+https://drive.google.com/file/d/1ZHWRhvPbxcAsOitwLrNozuXOP0I_yKRU
 
 ## How To Use :wrench:
 
