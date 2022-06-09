@@ -8,9 +8,6 @@ The following is a diagram of the application architecture:
 ![eMajstor-architecture](https://i.imgur.com/ciFu4i5.png)
 
 ## Demo :movie_camera:
-
-(https://drive.google.com/drive/u/1/folders/1OpolxcRXTelIrbds2FLlPSbR7FvO_aqY)
-
 Check out demo video [here](dodati link).
 
 ## How To Use :wrench:
