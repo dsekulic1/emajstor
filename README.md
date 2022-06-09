@@ -1,6 +1,6 @@
 # QuizHub
 
-Opis. <br>
+Application for easier finding of craftsman from all fields. <br>
 
 ## Demo :movie_camera:
 
