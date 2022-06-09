@@ -20,11 +20,8 @@ To clone and run this application, you will need [Git](https://git-scm.com), [Ja
 # Clone this repository
 $ git clone https://github.com/dsekulic1/emajstor.git
 
-# Go into the root directory
-$ cd emajstor
-
-# Build the project without running unit tests
-$ Open folder in Intellij IDEA and follow video tutorial 
+# Pratiti video uputstva u videu ispod:
+$ LINK VIDEA
 
 ```
 
