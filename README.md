@@ -1,6 +1,11 @@
-# QuizHub
+# eMajstor
 
 Application for easier finding of craftsman from all fields. <br>
+
+## Architecture
+
+The following is a diagram of the application architecture:
+![eMajstor-architecture](https://imgur.com/ciFu4i5)
 
 ## Demo :movie_camera:
 
