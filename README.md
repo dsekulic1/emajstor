@@ -5,7 +5,7 @@ Application for easier finding of craftsman from all fields. <br>
 ## Architecture
 
 The following is a diagram of the application architecture:
-![eMajstor-architecture](https://imgur.com/ciFu4i5)
+![eMajstor-architecture](https://i.imgur.com/ciFu4i5.png)
 
 ## Demo :movie_camera:
 
