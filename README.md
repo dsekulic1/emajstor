@@ -5,6 +5,7 @@ Application for easier finding of craftsman from all fields. <br>
 ## Architecture
 
 The following is a diagram of the application architecture:
+![arkitektura](https://user-images.githubusercontent.com/56236999/172934420-2e74c3ad-1753-483f-8d51-19c8641005c5.png)
 
 
 ## Demo :movie_camera:
