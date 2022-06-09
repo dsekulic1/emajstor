@@ -1,6 +1,6 @@
 # eMajstor
 
-Application for easier finding of craftsman from all fields. <br>
+Application for easier finding of craftsman from all fields. All types of searches and craftsman checks for the security of our users.<br>
 
 ## Architecture
 
